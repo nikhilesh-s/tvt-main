@@ -3,27 +3,23 @@ import { motion } from 'framer-motion';
 import { Header, Footer } from './page.jsx';
 
 const ProjectsPage = () => {
-  const projects = [
+  const portfolioItems = [
+    "Finished apps",
+    "Websites",
+    "Tools",
+    "Slide-style project showcases"
+  ];
+
+  const consultingSummaries = [
     {
-      id: 1,
-      title: "AI Tutoring Platform",
-      description: "A platform leveraging artificial intelligence to provide personalized tutoring experiences for students.",
-      tech: ["React", "Python", "TensorFlow", "AWS"],
-      status: "In Development"
+      problem: "Community organizations lacking modern, student-friendly tools.",
+      solution: "Custom web platforms and workflow automation.",
+      impact: "Improved access to services and stronger community engagement."
     },
     {
-      id: 2,
-      title: "Community Learning Hub",
-      description: "An online space for students to collaborate, share resources, and engage in peer-to-peer learning.",
-      tech: ["Next.js", "Node.js", "MongoDB", "WebRTC"],
-      status: "Planning Phase"
-    },
-    {
-      id: 3,
-      title: "STEM Workshop Series",
-      description: "Interactive workshops focusing on various STEM topics, designed for high school students.",
-      tech: ["Virtual Labs", "Interactive Simulations", "Live Coding"],
-      status: "Ongoing"
+      problem: "Nonprofits with manual, time-consuming processes.",
+      solution: "Lightweight apps and dashboards tailored to staff needs.",
+      impact: "Faster operations and clearer reporting for stakeholders."
     }
   ];
 
@@ -33,38 +29,69 @@ const ProjectsPage = () => {
       
       <main className="flex-grow py-20 px-4 relative z-10">
         <div className="container mx-auto">
-          <h1 className="text-4xl font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500 mb-12">Our Projects</h1>
-          <div className="space-y-6 max-w-4xl mx-auto">
-            {projects.map((project) => (
-              <motion.div
-                key={project.id}
-                className="bg-[var(--bg-secondary)] rounded-lg overflow-hidden border border-[var(--accent-primary)]/10 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-              >
-                <div className="px-6 py-4">
-                  <h3 className="text-xl font-semibold text-[var(--accent-primary)] mb-4">{project.title}</h3>
-                  <p className="text-[var(--text-secondary)] mb-4">{project.description}</p>
-                  <div className="mb-4">
-                    <h4 className="text-sm font-semibold text-[var(--accent-primary)] mb-2">Technologies & Tools:</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {project.tech.map((tech, index) => (
-                        <span
-                          key={index}
-                          className="px-3 py-1 bg-[var(--accent-primary)]/20 text-[var(--accent-primary)] rounded-full text-sm"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
+          <h1 className="text-4xl font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500 mb-12">Projects</h1>
+
+          <div className="space-y-12 max-w-5xl mx-auto">
+            <motion.section
+              className="bg-[var(--bg-secondary)] rounded-2xl p-8 border border-[var(--accent-primary)]/10 shadow-lg"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <h2 className="text-3xl font-bold mb-4 text-[var(--accent-primary)]">Portfolio</h2>
+              <p className="text-[var(--text-secondary)] mb-6">
+                Purpose; show quality work.
+              </p>
+              <div className="flex flex-wrap gap-3">
+                {portfolioItems.map((item) => (
+                  <span
+                    key={item}
+                    className="px-4 py-2 bg-[var(--accent-primary)]/20 text-[var(--accent-primary)] rounded-full text-sm"
+                  >
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </motion.section>
+
+            <motion.section
+              className="bg-[var(--bg-secondary)] rounded-2xl p-8 border border-[var(--accent-primary)]/10 shadow-lg"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+            >
+              <h2 className="text-3xl font-bold mb-4 text-[var(--accent-primary)]">Dev Vault</h2>
+              <p className="text-[var(--text-secondary)] mb-4">
+                Dev Vault is where interns work on real projects under mentorship from Amir Eftekhar, Diva Rawal, Nikhilesh Suravarjjala, and Siddharth Alluri. It's focused on learning by doing; building skills through actual execution.
+              </p>
+              <p className="text-[var(--text-secondary)]">
+                Admin panel needed: project uploads, intern attribution, category filters.
+              </p>
+            </motion.section>
+
+            <motion.section
+              className="bg-[var(--bg-secondary)] rounded-2xl p-8 border border-[var(--accent-primary)]/10 shadow-lg"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
+              <h2 className="text-3xl font-bold mb-4 text-[var(--accent-primary)]">Consulting</h2>
+              <p className="text-[var(--text-secondary)] mb-6">
+                Projects completed with external partners; nonprofits, schools, and youth programs.
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {consultingSummaries.map((summary, index) => (
+                  <div
+                    key={index}
+                    className="bg-[var(--bg-primary)] rounded-xl p-6 border border-[var(--accent-primary)]/10"
+                  >
+                    <p className="text-sm text-[var(--text-secondary)] mb-2"><strong>Problem:</strong> {summary.problem}</p>
+                    <p className="text-sm text-[var(--text-secondary)] mb-2"><strong>Solution:</strong> {summary.solution}</p>
+                    <p className="text-sm text-[var(--text-secondary)]"><strong>Impact:</strong> {summary.impact}</p>
                   </div>
-                  <div className="flex justify-between items-center text-sm text-[var(--text-secondary)]">
-                    <span>Status: {project.status}</span>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
+                ))}
+              </div>
+            </motion.section>
           </div>
         </div>
       </main>

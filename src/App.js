@@ -3,15 +3,17 @@ import Web from './page.jsx'
 import ProjectsPage from './projects.jsx';
 import { HashRouter as Router, Route, Routes } from 'react-router-dom';
 import ArticlesPage from './Article.jsx';
+import ArticleDetail from './ArticleDetail.jsx';
 import TeamPage from './team.jsx';
-import DevVaultPage from './devVault.jsx';
-import DevVaultDetail from './devVaultDetail.jsx';
-import DevVaultCreate from './devVaultCreate.jsx';
 import { ThemeProvider } from './ThemeContext';
-import ArticleCreate from './ArticleCreate.jsx';
-import Meet from './meet';
-import OfficersPage from './OfficersPage.jsx';
-import ProtectedRoute from './components/ProtectedRoute';
+import WhyJoin from './WhyJoin.jsx';
+import ImpactPage from './ImpactPage.jsx';
+import GalleryPage from './GalleryPage.jsx';
+import CommunityInitiatives from './CommunityInitiatives.jsx';
+import Chapters from './Chapters.jsx';
+import ChapterDetail from './ChapterDetail.jsx';
+import ContactPage from './ContactPage.jsx';
+import ResourcesPage from './ResourcesPage.jsx';
 
 function App() {
      if (sessionStorage.redirect) {
@@ -27,35 +29,17 @@ function App() {
         <Routes>
           <Route path="/" element={<Web />} />
           <Route path="/articles" element={<ArticlesPage />} />
+          <Route path="/articles/:slug" element={<ArticleDetail />} />
           <Route path="/team" element={<TeamPage />} />
           <Route path="/projects" element={<ProjectsPage />} />
-          <Route path="/dev-vault" element={<DevVaultPage />} />
-          <Route
-            path="/dev-vault/create"
-            element={
-              <ProtectedRoute>
-                <DevVaultCreate />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/dev-vault/:projectId"
-            element={
-              <ProtectedRoute>
-                <DevVaultDetail />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/articles/create"
-            element={
-              <ProtectedRoute>
-                <ArticleCreate />
-              </ProtectedRoute>
-            }
-          />
-          <Route path="/meet" element={<Meet />} />
-          <Route path="/officers" element={<OfficersPage />} />
+          <Route path="/why-join" element={<WhyJoin />} />
+          <Route path="/impact" element={<ImpactPage />} />
+          <Route path="/gallery" element={<GalleryPage />} />
+          <Route path="/community-initiatives" element={<CommunityInitiatives />} />
+          <Route path="/chapters" element={<Chapters />} />
+          <Route path="/chapters/:chapterId" element={<ChapterDetail />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/resources" element={<ResourcesPage />} />
         </Routes>
       </Router>
     </ThemeProvider>

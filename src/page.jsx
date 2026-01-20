@@ -1,8 +1,7 @@
-import React, { useState, useEffect, createContext, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Users, Rocket, UserPlus, Menu, X, ChevronRight, Lightbulb, Send, Globe, Code, Palette, ArrowRight, Info, Video, MessageCircle, Star, Award, FileText, BarChart, Sun, Moon } from 'lucide-react';
-import { Facebook, Twitter, Instagram, Linkedin, Book, Clock, PenTool, CheckCircle, Target, Briefcase} from 'lucide-react';
-import { FaChevronDown, FaChevronUp,  FaBook, FaChartLine, FaArrowRight } from 'react-icons/fa';
+import { Users, Rocket, Menu, X, Lightbulb, Send, Globe, ArrowRight, MessageCircle, Star, FileText, BarChart, Sun, Moon, Facebook, Twitter, Instagram, Linkedin, Book } from 'lucide-react';
+import { FaChevronDown } from 'react-icons/fa';
 import ScrollFadeIn from './Fade.jsx';
 import { Link } from 'react-router-dom';
 import logo from './images/logo2.svg';
@@ -38,34 +37,6 @@ styles.textContent = `
 `;
 document.head.appendChild(styles);
 
-const scrollToSection = (sectionId) => {
-  const element = document.getElementById(sectionId);
-  if (element) {
-    element.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start',
-    });
-  }
-};
-
-const TypeWriter = ({ text, delay = 40 }) => {
-  const [displayText, setDisplayText] = useState('');
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  useEffect(() => {
-    if (currentIndex < text.length) {
-      const timeout = setTimeout(() => {
-        setDisplayText(prevText => prevText + text[currentIndex]);
-        setCurrentIndex(prevIndex => prevIndex + 1);
-      }, delay);
-
-      return () => clearTimeout(timeout);
-    }
-  }, [currentIndex, delay, text]);
-
-  return <span>{displayText}</span>;
-};
-
 const Header = () => {
   const { isDark, toggleTheme } = useTheme();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -80,15 +51,72 @@ const Header = () => {
   }, []);
 
   const navItems = [
-    { name: 'Why Join TVT?', icon: <Users size={20} />, to: '/#why-join', onClick: () => scrollToSection('why') },
-    { name: 'Impact', icon: <BarChart size={20} />, to: '/#impact', onClick: () => scrollToSection('impact') },
+    { name: 'Why Join TVT?', icon: <Users size={20} />, to: '/why-join' },
+    { name: 'Impact', icon: <BarChart size={20} />, to: '/impact' },
     { name: 'Articles', icon: <FileText size={20} />, to: '/articles' },
+    { name: 'Gallery', icon: <FileText size={20} />, to: '/gallery' },
+    {
+      name: 'Digital Resources',
+      icon: <FileText size={20} />,
+      children: [
+        { name: 'Digital Footprint Guide', to: '/resources#digital-footprint' },
+        { name: 'Email Safety Tips', to: '/resources#email-safety' },
+        { name: 'Online Privacy Guide', to: '/resources#online-privacy' },
+        { name: 'Password Security Guide', to: '/resources#password-security' },
+        { name: 'Phishing Prevention Guide', to: '/resources#phishing-prevention' }
+      ]
+    },
     { name: 'Team', icon: <Users size={20} />, to: '/team' },
-    { name: 'Dev Vault', icon: <Code size={20} />, to: '/dev-vault' },
-    { name: 'Contact', icon: <MessageCircle size={20} />, to: '/#contact', onClick: () => scrollToSection('contact') },
+    { name: 'Contact', icon: <MessageCircle size={20} />, to: '/contact' },
   ];
 
-  const NavLink = ({ item, onClick }) => {
+  const NavLink = ({ item, onClick, isMobile }) => {
+    if (item.children) {
+      if (isMobile) {
+        return (
+          <div className="px-4 py-2 rounded-2xl bg-[var(--bg-secondary)]/60 border border-[var(--accent-primary)]/10">
+            <div className="flex items-center text-[var(--text-secondary)] mb-2">
+              {React.cloneElement(item.icon, { className: "mr-2" })}
+              {item.name}
+            </div>
+            <div className="flex flex-col gap-2">
+              {item.children.map((child) => (
+                <Link
+                  key={child.name}
+                  to={child.to}
+                  className="px-3 py-2 rounded-lg text-sm text-[var(--text-secondary)] hover:text-[var(--accent-primary)] hover:bg-[var(--accent-primary)]/5 transition-all duration-200"
+                  onClick={onClick}
+                >
+                  {child.name}
+                </Link>
+              ))}
+            </div>
+          </div>
+        );
+      }
+
+      return (
+        <div className="relative group">
+          <button className="px-4 py-2 rounded-full transition-all duration-200 flex items-center text-[var(--text-secondary)] hover:text-[var(--accent-primary)] hover:bg-[var(--accent-primary)]/5">
+            {React.cloneElement(item.icon, { className: "mr-2" })}
+            {item.name}
+          </button>
+          <div className="absolute left-0 mt-2 w-64 rounded-2xl bg-[var(--bg-primary)] border border-[var(--accent-primary)]/10 shadow-xl opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-opacity duration-200">
+            <div className="p-3 flex flex-col gap-1">
+              {item.children.map((child) => (
+                <Link
+                  key={child.name}
+                  to={child.to}
+                  className="px-3 py-2 rounded-lg text-sm text-[var(--text-secondary)] hover:text-[var(--accent-primary)] hover:bg-[var(--accent-primary)]/5 transition-all duration-200"
+                >
+                  {child.name}
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+      );
+    }
     if (item.onClick) {
       return (
         <button 
@@ -190,6 +218,7 @@ const Header = () => {
                   >
                     <NavLink 
                       item={item}
+                      isMobile
                       onClick={() => setIsMenuOpen(false)}
                     />
                   </motion.li>
@@ -234,15 +263,7 @@ const RotatingCube = () => (
   );
 
 
-  const scrollToJoinSection = () => {
-    const joinSection = document.getElementById('join');
-    if (joinSection) {
-      joinSection.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-  
 const Hero = () => {
-  const { isDark } = useTheme();
   return (
     <section className="relative min-h-screen flex items-start justify-center overflow-hidden pt-40 md:pt-32 polka-pattern">
       {/* Grid overlay */}
@@ -263,7 +284,7 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            Empowering Young Innovators
+            Empowering young innovators to build real things.
           </motion.h1>
           <motion.p
             className="text-lg md:text-xl lg:text-2xl text-[var(--text-secondary)] mb-8"
@@ -271,7 +292,7 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            Bring your ideas to life with Tri-Valley Tech
+            Bring your ideas to life with Tri-Valley Tech.
           </motion.p>
           <motion.div
             className="flex flex-wrap justify-center md:justify-start gap-4"
@@ -280,7 +301,7 @@ const Hero = () => {
             transition={{ duration: 0.5, delay: 0.4 }}
           >
             <a
-              href="https://discord.gg/n6TCxpCGqM"
+              href="https://discord.gg/7ArGszd4FZ"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-[var(--accent-primary)] text-white px-8 py-3 rounded-full font-semibold hover:bg-[var(--accent-secondary)] transition-colors duration-300 flex items-center gap-2 shadow-lg hover:shadow-xl"
@@ -288,6 +309,13 @@ const Hero = () => {
               Get Started
               <ArrowRight className="ml-2" />
             </a>
+            <Link
+              to="/why-join"
+              className="border border-[var(--accent-primary)] text-[var(--accent-primary)] px-8 py-3 rounded-full font-semibold hover:bg-[var(--accent-primary)]/10 transition-colors duration-300 flex items-center gap-2"
+            >
+              Why Join
+              <ArrowRight className="ml-2" />
+            </Link>
           </motion.div>
         </div>
         <div className="md:w-1/2 flex justify-center">
@@ -298,80 +326,27 @@ const Hero = () => {
   );
 };
 
-const VideoSection = () => {
-  const { isDark } = useTheme();
-  return (
-    <section className="py-16 bg-[var(--bg-secondary)] polka-pattern">
-      <div className="container mx-auto px-4">
-        <ScrollFadeIn>
-          <div className="mt-12">
-            <h3 className="text-4xl md:text-5xl font-bold text-center mb-12 bg-clip-text text-transparent bg-gradient-to-r from-[var(--accent-primary)] to-[var(--accent-secondary)]">
-              Watch Our Introduction Video
-            </h3>
-            <div className="flex justify-center">
-              <div
-                className="rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 bg-[var(--bg-primary)]"
-                style={{
-                  width: '100%',
-                  maxWidth: '800px',
-                  aspectRatio: '16 / 9',
-                }}
-              >
-                <iframe
-                  width="100%"
-                  height="100%"
-                  src="https://www.youtube.com/embed/p2AWYanIHkc"
-                  title="YouTube video player"
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                  className="rounded-lg"
-                ></iframe>
-              </div>
-            </div>
-          </div>
-        </ScrollFadeIn>
-      </div>
-    </section>
-  );
-};
-
-  const Feature = ({ icon, title, description, index }) => {
-    const { isDark } = useTheme();
-    return (
-      <motion.div 
-        className="flex flex-col items-center text-center p-6 rounded-lg shadow-lg bg-[var(--bg-secondary)] relative overflow-hidden group hover:shadow-xl transition-all duration-300"
-        whileHover={{ scale: 1.05, zIndex: 1 }}
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: index * 0.1 }}
-      >
-        <div className="text-[var(--accent-primary)] mb-4 flex justify-center items-center h-16 group-hover:text-[var(--accent-secondary)] transition-colors duration-300">
-          {icon}
-        </div>
-        <h3 className="text-xl font-semibold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-[var(--accent-primary)] to-[var(--accent-secondary)]">{title}</h3>
-        <p className="text-[var(--text-secondary)]">{description}</p>
-      </motion.div>
-    );
-  };
-  
   const Why = () => {
-    const { isDark } = useTheme();
     const features = [
       {
-        title: "Real-World Projects",
-        description: "Take part in projects that address real community needs and provide tangible outcomes. From engineering solutions to technology-driven initiatives, TVT gives you the opportunity to make a difference while gaining hands-on experience.",
+        title: "Hands-on Projects",
+        description: "Work on real ideas that solve real problems; projects you can showcase in portfolios, competitions, and college applications.",
         icon: <Rocket />
       },
       {
-        title: "Skill Development",
-        description: "Learn essential skills such as project management, technical problem-solving, and leadership. Whether you're exploring coding, design, or environmental innovation, you'll develop abilities that set you apart for future academic and career opportunities.",
+        title: "Mentorship & Guidance",
+        description: "Learn directly from leads, college mentors, and peers who have already built apps, launched startups, and led community events.",
         icon: <Book />
       },
       {
-        title: "Volunteer Hours",
-        description: "Earn valuable volunteer hours for both your direct contributions and collaborative efforts. Engage in productive discussions and teamwork while building your resume and making a positive impact.",
-        icon: <Clock />
+        title: "A Supportive Community",
+        description: "Meet people who push you forward, hype you up, and help you grow.",
+        icon: <Users />
+      },
+      {
+        title: "Future Opportunities",
+        description: "Leadership roles, paid projects, internships, and long-term initiatives; doors many students never even know exist.",
+        icon: <Star />
       }
     ];
 
@@ -395,11 +370,18 @@ const VideoSection = () => {
               Why Join Tri-Valley Tech?
             </h2>
             <p className="text-[var(--text-secondary)] text-lg md:text-xl leading-relaxed">
-              At Tri-Valley Tech (TVT), we empower high school students to create real-world change through meaningful projects, skill development, and community impact.pact. By joining, you'll work on collaborative initiatives that solve real problems, gain practical experience, and contribute to something bigger than yourself.
+              At Tri-Valley Tech, you're not just joining a club or a nonprofit; you're joining a community of people who actually want to build things. Apps, websites, engineering ideas, cyber tools, or full social impact projects; TVT gives you the space and support to create something real.
+            </p>
+            <p className="text-[var(--text-secondary)] text-lg md:text-xl leading-relaxed mt-4">
+              We focus on three things: learning, building, and making an impact.
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+          <div className="text-center mb-8">
+            <h3 className="text-3xl font-bold text-[var(--text-primary)]">What You'll Get</h3>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
             {features.map((feature, index) => (
               <motion.div
                 key={index}
@@ -429,17 +411,18 @@ const VideoSection = () => {
           </div>
 
           <motion.div 
-            className="max-w-4xl mx-auto text-center"
+            className="max-w-3xl mx-auto text-center"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <p className="text-[var(--text-secondary)] text-lg leading-relaxed mb-6">
-              At TVT, you'll join a community of like-minded peers, guided by experienced mentors, to turn your ideas into impactful realities. Whether you're coding an app, designing sustainable solutions, or working on your first engineering project, TVT equips you with the tools to succeed and the platform to showcase your talent.
-            </p>
-            <p className="text-[var(--text-secondary)] text-lg leading-relaxed">
-              Become part of a movement that bridges the gap between education, technology, and social impact. Join Tri-Valley Tech today to develop your skills, contribute to meaningful projects, and make a lasting difference in your community and beyond.
-            </p>
+            <Link
+              to="/why-join"
+              className="inline-flex items-center gap-2 text-[var(--accent-primary)] hover:text-[var(--accent-secondary)] transition-colors"
+            >
+              Explore the full Why Join page
+              <ArrowRight size={18} />
+            </Link>
           </motion.div>
         </div>
       </section>
@@ -449,15 +432,14 @@ const VideoSection = () => {
 
 
   const AboutUs = () => {
-    const { isDark } = useTheme();
     const [isExpanded, setIsExpanded] = useState(false);
-    const mainContent = "Tri-Valley Tech is a nonprofit organization dedicated to empowering high school students through technology-driven initiatives. We provide hands-on opportunities to develop innovative solutions, collaborate on impactful projects, and lead community-focused events, bridging the gap between education, technology, and real-world needs.";
+    const mainContent = "Tri-Valley Tech exists for one purpose: empowering young innovators to turn ideas into real impact. Everything we build is meant to be practical, meaningful, and student-driven.";
   
-    const expandedContent = `Tri-Valley Tech serves as a hub for creativity and innovation, equipping students with resources, mentorship, and a collaborative platform to turn ideas into reality. Our mission is to inspire and empower the next generation of leaders by fostering an environment where critical thinking, collaboration, and real-world problem-solving thrive.
+    const expandedContent = `Tri-Valley Tech gives students the chance to do real work, not just learn about it. From apps and websites to engineering and cyber tools, we provide the space, mentorship, and momentum to ship real projects.
 
-Through a structured approach that includes project incubation, strategic planning, and hands-on experience, we enable students to create solutions that address community challenges and broader societal needs. Whether it's web development, app creation, or sustainability-focused projects, we aim to bridge the gap between academic learning and practical application.
+We focus on three things: learning, building, and making an impact. Each initiative is designed to help students grow their skills while delivering tangible outcomes for their communities.
 
-We envision a world where every student has the opportunity to explore their passions, gain valuable skills, and make a meaningful impact. By nurturing curiosity, resilience, and leadership, Tri-Valley Tech is building a community of innovators ready to tackle the challenges of today and shape a better tomorrow.`;
+Our vision is a future shaped by students who are ready to take action today. Through collaboration, leadership, and meaningful execution, we're building a community of young innovators who are prepared to lead.`;
 
     return (
       <section id="about" className="py-20 bg-[var(--bg-secondary)]">
@@ -501,21 +483,6 @@ We envision a world where every student has the opportunity to explore their pas
       </section>
     );
   };
-  const CTAButton = ({ href, text, icon, description }) => (
-    <div className="mb-12 flex flex-col items-center">
-      <p className="text-lg mb-4 text-[var(--text-secondary)] text-center max-w-md">{description}</p>
-      <Link to={href}>
-        <motion.button 
-          className="bg-[var(--accent-primary)] text-white px-8 py-3 rounded-full font-bold hover:bg-[var(--accent-secondary)] transition duration-300 shadow-neon flex items-center justify-center"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          {text} {icon}
-        </motion.button>
-      </Link>
-    </div>
-  );
-  
   const CTA = () => (
     <section id="join" className="py-20 bg-[var(--bg-secondary)] circuit-pattern">
       <div className="container mx-auto text-center px-4">
@@ -525,7 +492,7 @@ We envision a world where every student has the opportunity to explore their pas
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          Ready to Join Us?
+          Ready to Build Something Real?
         </motion.h2>
         <motion.p 
           className="text-xl text-[var(--text-secondary)] mb-8"
@@ -533,10 +500,13 @@ We envision a world where every student has the opportunity to explore their pas
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
         >
-          Start your journey with Tri-Valley Tech today
+          If you've ever wanted to create something meaningful, TVT gives you the tools, the team, and the momentum to make it happen.
         </motion.p>
-        <motion.button
-          className="px-8 py-3 bg-[var(--accent-primary)] text-white rounded-full font-semibold hover:bg-[var(--accent-secondary)] transition-all duration-200"
+        <motion.a
+          href="https://discord.gg/7ArGszd4FZ"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center px-8 py-3 bg-[var(--accent-primary)] text-white rounded-full font-semibold hover:bg-[var(--accent-secondary)] transition-all duration-200"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           initial={{ opacity: 0, y: 20 }}
@@ -544,91 +514,154 @@ We envision a world where every student has the opportunity to explore their pas
           transition={{ duration: 0.5, delay: 0.2 }}
         >
           Get Started
-        </motion.button>
+        </motion.a>
       </div>
     </section>
   );
 
-  const Impact = () => (
+  const ImpactPreview = () => (
     <section className="py-20 bg-[var(--bg-secondary)] text-[var(--text-primary)] relative overflow-hidden polka-subtle">
       <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMzLjMxIDAgNiAyLjY5IDYgNnMtMi42OSA2LTYgNi02LTIuNjktNi02IDIuNjktNiA2LTZ6bTEyIDEyYzMuMzEgMCA2IDIuNjkgNiA2cy0yLjY5IDYtNiA2LTYtMi42OS02LTYgMi42OS02IDYtNnptLTI0IDBjMy4zMSAwIDYgMi42OSA2IDZzLTIuNjkgNi02IDYtNi0yLjY5LTYtNiAyLjY5LTYgNi02eiIgc3Ryb2tlPSIjNzMyOWJlIiBzdHJva2Utd2lkdGg9IjIiLz48L2c+PC9zdmc+')] opacity-5"></div>
       
       <div className="container mx-auto px-4 relative">
         <motion.h2 
-          className="text-6xl font-bold text-center mb-20"
+          className="text-5xl md:text-6xl font-bold text-center mb-16"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-purple-400">Our Impact By Numbers</span>
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-purple-400">Impact Preview</span>
         </motion.h2>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <motion.div 
-            className="p-8 rounded-2xl bg-[var(--bg-primary)] shadow-xl border border-[var(--accent-primary)]/10 hover:border-[var(--accent-primary)]/30 transition-all duration-300"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            whileHover={{ y: -5, transition: { duration: 0.2 } }}
-          >
-            <div className="flex justify-center mb-6">
-              <div className="p-3 rounded-full bg-purple-500/10">
-                <Users className="w-10 h-10 text-purple-400" />
-              </div>
-            </div>
-            <h3 className="text-2xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500">Growing Team</h3>
-            <p className="text-[var(--text-secondary)] leading-relaxed">
-              Over 30 passionate developers, designers, and innovators working together to create meaningful technology solutions. Our diverse team brings expertise across multiple domains, from mobile development to AI.
-            </p>
-          </motion.div>
-
-          <motion.div 
-            className="p-8 rounded-2xl bg-[var(--bg-primary)] shadow-xl border border-[var(--accent-primary)]/10 hover:border-[var(--accent-primary)]/30 transition-all duration-300"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            whileHover={{ y: -5, transition: { duration: 0.2 } }}
-          >
-            <div className="flex justify-center mb-6">
-              <div className="p-3 rounded-full bg-purple-500/10">
-                <Rocket className="w-10 h-10 text-purple-400" />
-              </div>
-            </div>
-            <h3 className="text-2xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500">Launched Projects</h3>
-            <p className="text-[var(--text-secondary)] leading-relaxed">
-              Successfully launched multiple applications and platforms that solve real-world problems. From mobile apps to web platforms, our projects are making a tangible difference in how people interact with technology.
-            </p>
-          </motion.div>
-
-          <motion.div 
-            className="p-8 rounded-2xl bg-[var(--bg-primary)] shadow-xl border border-[var(--accent-primary)]/10 hover:border-[var(--accent-primary)]/30 transition-all duration-300"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            whileHover={{ y: -5, transition: { duration: 0.2 } }}
-          >
-            <div className="flex justify-center mb-6">
-              <div className="p-3 rounded-full bg-purple-500/10">
-                <Globe className="w-10 h-10 text-purple-400" />
-              </div>
-            </div>
-            <h3 className="text-2xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500">Global Impact</h3>
-            <p className="text-[var(--text-secondary)] leading-relaxed">
-              Our initiatives span across various sectors including education, healthcare, and community development. With multiple ongoing projects, we're continuously expanding our reach and impact in the tech community.
-            </p>
-          </motion.div>
+          {[
+            {
+              title: "Chapters",
+              description: "4 chapters across 4 cities. Dublin, Pleasanton, San Ramon, and Livermore. Each chapter is a local hub for collaboration, leadership, and building."
+            },
+            {
+              title: "Consulting",
+              description: "Real partnerships. Real problems. Real solutions. TVT collaborates with nonprofits, schools, and youth organizations to design and deliver technology that makes a difference."
+            },
+            {
+              title: "Events",
+              description: "A growing calendar of youth-focused innovation events. Workshops, speaker sessions, and community impact experiences; with more planned throughout 2026."
+            }
+          ].map((item, index) => (
+            <motion.div 
+              key={item.title}
+              className="p-8 rounded-2xl bg-[var(--bg-primary)] shadow-xl border border-[var(--accent-primary)]/10 hover:border-[var(--accent-primary)]/30 transition-all duration-300"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              whileHover={{ y: -5, transition: { duration: 0.2 } }}
+            >
+              <h3 className="text-2xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500">{item.title}</h3>
+              <p className="text-[var(--text-secondary)] leading-relaxed mb-6">
+                {item.description}
+              </p>
+              <Link to="/impact" className="inline-flex items-center gap-2 text-[var(--accent-primary)] hover:text-[var(--accent-secondary)] transition-colors">
+                Learn more
+                <ArrowRight size={18} />
+              </Link>
+            </motion.div>
+          ))}
         </div>
+      </div>
+    </section>
+  );
 
-        <motion.div 
-          className="mt-16 text-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.6 }}
-        >
-          <p className="text-xl text-[var(--text-secondary)] max-w-3xl mx-auto">
-            From concept to deployment, we're building a track record of successful projects that demonstrate our commitment to innovation and excellence in technology.
+  const GalleryCarousel = () => {
+    const slides = [
+      { title: "Workshops", image: "https://via.placeholder.com/1200x700?text=Workshops" },
+      { title: "App Launches", image: "https://via.placeholder.com/1200x700?text=App+Launches" },
+      { title: "Mentorship Sessions", image: "https://via.placeholder.com/1200x700?text=Mentorship+Sessions" },
+      { title: "Community Outreach", image: "https://via.placeholder.com/1200x700?text=Community+Outreach" }
+    ];
+    const [activeIndex, setActiveIndex] = useState(0);
+    const totalSlides = slides.length;
+    const activeSlide = slides[activeIndex];
+
+    const goNext = () => {
+      setActiveIndex((prev) => (prev + 1) % totalSlides);
+    };
+
+    const goPrev = () => {
+      setActiveIndex((prev) => (prev - 1 + totalSlides) % totalSlides);
+    };
+
+    return (
+      <motion.div
+        className="max-w-5xl mx-auto"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+      >
+        <div className="text-center mb-10">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-[var(--accent-primary)] to-[var(--accent-secondary)]">
+            Gallery Preview
+          </h2>
+          <p className="text-[var(--text-secondary)] text-lg leading-relaxed">
+            Take a look at what we've been building. From workshops to app launches to behind-the-scenes moments, here's a glimpse into life at Tri-Valley Tech.
           </p>
-        </motion.div>
+        </div>
+        <div className="relative rounded-3xl overflow-hidden border border-[var(--accent-primary)]/20 shadow-2xl bg-[var(--bg-secondary)]">
+          <img
+            src={activeSlide.image}
+            alt={activeSlide.title}
+            className="w-full h-[360px] sm:h-[460px] object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent"></div>
+          <div className="absolute bottom-0 left-0 right-0 p-8 flex items-center justify-between">
+            <div>
+              <p className="text-sm uppercase tracking-widest text-white/70">Preview</p>
+              <h3 className="text-3xl font-bold text-white">{activeSlide.title}</h3>
+            </div>
+            <div className="flex items-center gap-3">
+              <button
+                onClick={goPrev}
+                className="h-11 w-11 rounded-full bg-white/10 border border-white/30 text-white flex items-center justify-center hover:bg-white/20 transition"
+                aria-label="Previous slide"
+              >
+                <ArrowRight className="rotate-180" size={18} />
+              </button>
+              <button
+                onClick={goNext}
+                className="h-11 w-11 rounded-full bg-white/10 border border-white/30 text-white flex items-center justify-center hover:bg-white/20 transition"
+                aria-label="Next slide"
+              >
+                <ArrowRight size={18} />
+              </button>
+            </div>
+          </div>
+        </div>
+        <div className="flex justify-center gap-2 mt-6">
+          {slides.map((slide, index) => (
+            <button
+              key={slide.title}
+              onClick={() => setActiveIndex(index)}
+              className={`h-2.5 w-2.5 rounded-full transition ${index === activeIndex ? 'bg-[var(--accent-primary)]' : 'bg-[var(--text-secondary)]/40'}`}
+              aria-label={`Go to ${slide.title}`}
+            />
+          ))}
+        </div>
+        <div className="text-center mt-8">
+          <Link
+            to="/gallery"
+            className="inline-flex items-center gap-2 bg-[var(--accent-primary)] text-white px-6 py-3 rounded-full font-semibold hover:bg-[var(--accent-secondary)] transition-colors"
+          >
+            Visit Our Gallery
+            <ArrowRight size={18} />
+          </Link>
+        </div>
+      </motion.div>
+    );
+  };
+
+  const GalleryPreview = () => (
+    <section className="py-20 bg-[var(--bg-primary)] text-[var(--text-primary)] relative overflow-hidden polka-subtle">
+      <div className="container mx-auto px-4">
+        <GalleryCarousel />
       </div>
     </section>
   );
@@ -661,6 +694,13 @@ We envision a world where every student has the opportunity to explore their pas
       <section className="py-20 bg-[var(--bg-secondary)] contact-section polka-pattern">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center text-purple-400 mb-8">Send Us a Message</h2>
+          <p className="text-center text-[var(--text-secondary)] mb-6">
+            Tri-Valley Tech is a 501(c)(3) nonprofit organization based in California.
+          </p>
+          <div className="text-center text-[var(--text-secondary)] mb-10">
+            <p>Email: trivalleytechnology@gmail.com</p>
+            <p>Phone: (470) 609-2206</p>
+          </div>
           <form onSubmit={handleSubmit} className="max-w-lg mx-auto contact-form relative z-10">
             <div className="mb-6">
               <label htmlFor="name" className="block text-purple-300 mb-2">Name</label>
@@ -721,6 +761,7 @@ We envision a world where every student has the opportunity to explore their pas
           <div>
             <h3 className="text-xl font-bold text-[var(--accent-primary)] mb-4">Tri-Valley Tech</h3>
             <p className="text-sm">Empowering high school innovators to create real-world impact through collaborative projects.</p>
+            <p className="text-sm mt-2">Tri-Valley Tech is a 501(c)(3) nonprofit organization based in California.</p>
           </div>
           <div>
             <h4 className="text-lg font-semibold text-[var(--accent-primary)] mb-4">Quick Links</h4>
@@ -729,6 +770,7 @@ We envision a world where every student has the opportunity to explore their pas
                 <li><Link to="/articles" className="hover:text-purple-300 transition duration-300">Articles</Link></li>
                 <li><Link to="/team" className="hover:text-purple-300 transition duration-300">Team</Link></li>
                 <li><Link to="/projects" className="hover:text-purple-300 transition duration-300">Projects</Link></li>
+                <li><Link to="/contact" className="hover:text-purple-300 transition duration-300">Contact</Link></li>
               </ul>
             </div>
           </div>
@@ -762,230 +804,13 @@ We envision a world where every student has the opportunity to explore their pas
           </div>
         </div>
         <div className="border-t border-gray-800 mt-8 pt-8 text-center">
-          <p>&copy; 2024 Tri-Valley Tech. All rights reserved.</p>
+          <p>&copy; 2026 Tri-Valley Tech. All rights reserved.</p>
         </div>
       </div>
     </footer>
   );
 
-  const TeamMember = ({ name, role, pronouns, bio, image, email, linkedin, portfolio, social, tags }) => {
-    return (
-      <div className="bg-[#161c24] rounded-lg p-8 flex flex-col items-center text-center">
-        <img
-          className="w-32 h-32 rounded-full mb-4 object-cover"
-          src={image}
-          alt={name}
-        />
-        <h3 className="text-xl font-semibold text-white">{name}</h3>
-        {pronouns && <p className="text-sm text-gray-400 mt-1">{pronouns}</p>}
-        <p className="text-indigo-400 font-medium mt-1">{role}</p>
-        <p className="text-gray-300 mt-4 text-sm">{bio}</p>
-        <div className="mt-4 flex flex-wrap justify-center gap-2">
-          {tags.map((tag, index) => (
-            <span
-              key={index}
-              className="px-3 py-1 text-sm bg-gray-700 text-gray-400 rounded-full"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
-        <div className="mt-4 space-y-2">
-          {email && (
-            <p className="text-sm text-gray-400">
-              <a href={`mailto:${email}`} className="hover:text-indigo-400">
-                {email}
-              </a>
-            </p>
-          )}
-          {linkedin && (
-            <p className="text-sm text-gray-400">
-              <a href={linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-indigo-400">
-                LinkedIn
-              </a>
-            </p>
-          )}
-          {portfolio && (
-            <p className="text-sm text-gray-400">
-              <a href={portfolio} target="_blank" rel="noopener noreferrer" className="hover:text-indigo-400">
-                Portfolio
-              </a>
-            </p>
-          )}
-          {social && (
-            <p className="text-sm text-gray-400">{social}</p>
-          )}
-        </div>
-      </div>
-    );
-  };
-
-  const TeamSection = () => {
-    const teamMembers = {
-      chiefSuite: [
-        {
-          name: 'Nikhilesh Suravarjjala',
-          role: 'CEO',
-          pronouns: 'he/him',
-          bio: `As the co-CEO of Tri-Valley Tech, I am passionate about expanding my horizons in web and app development, management, and design. TVT gives me the opportunity to lead innovative tech solutions, from building user-focused platforms to creating impactful applications that address real-world challenges. As a designer, I enjoy exploring creative problem-solving while ensuring our projects meet the needs of the community. Beyond development, I am deeply committed to organizing community events that inspire and empower local youth, fostering connections and opportunities that drive growth and innovation. My goal is to bridge technology with societal impact, helping students turn their ideas into reality while making a lasting difference in their communities.`,
-          image: 'https://drive.google.com/uc?export=view&id=1Cv0MPwfkscJ9_I_mjxCgOtxoM8TmlPsZ',
-          email: 'niksuravarjjala@gmail.com',
-          linkedin: '',
-          social: '@nik.suravar',
-          tags: ['Development', 'UI/UX Development', 'Event Planning', 'Research', 'Management']
-        },
-        {
-          name: 'Amir Udler',
-          role: 'CEO',
-          pronouns: 'he/him',
-          bio: 'Keep existing bio',
-          image: '/images/placeholder-profile.jpg',
-          tags: ['Management']
-        },
-        {
-          name: 'Siddharth Alluri',
-          role: 'CFO',
-          pronouns: 'he/him',
-          bio: `As the CFO at Tri-Valley Tech, I manage our finances to make sure our innovative projects are well-funded. My job is to ensure that our financial decisions support our mission of giving students practical, real-world experience. I handle budgeting and resource allocation, working closely with our executive team to make sure we use our funds wisely. This ensures students have the tools and resources they need to engage in their engineering projects that help them learn and grow. At Tri-Valley Tech, we aim to create an environment where students gain the technical skills needed to succeed in the tech industry, while ensuring our resources are effectively managed to support their learning.`,
-          image: 'https://drive.google.com/uc?export=view&id=1R_1J6x_LkFG5oVOM4s_tGNAmqQIeqBQB',
-          email: 'siddharth.alluri@gmail.com',
-          social: 'instagram: siddharth.alluri',
-          tags: ['Event Planning', 'Management']
-        }
-      ],
-      officers: [
-        {
-          name: 'Diva Rawal',
-          role: 'Interim COO',
-          pronouns: 'she/her',
-          bio: `Hi, I'm Diva Rawal, a sophomore at Dublin High School and the COO of Tri-Valley Tech! Over the past two years as class president at my high school, I've had the privilege to grow as a leader and collaborate with others to make a positive impact. I'm always eager to learn and try new things, whether it's exploring video production or creating apps designed to help others. Teaching and supporting those around me is something I'm passionate about, and I'm excited to continue making a difference through my role at Tri-Valley Tech.`,
-          image: 'https://drive.google.com/uc?export=view&id=1nGdhcw_hvsEnNXV4t0rd73lUC6pAIJ0y',
-          email: 'diva.rawal@gmail.com',
-          linkedin: 'https://www.linkedin.com/in/diva-rawal-97a578345/',
-          social: 'Instagram: @diva.rawal',
-          tags: ['UI/UX Development', 'Graphic Design', 'Event Planning', 'Mentorship', 'Marketing', 'Management']
-        },
-        {
-          name: 'Arjun',
-          role: 'Officer',
-          pronouns: '',
-          bio: 'Information coming soon',
-          image: '/images/placeholder-profile.jpg',
-          tags: ['Management']
-        }
-      ],
-      development: [
-        {
-          name: 'Oliver M',
-          role: 'Intern',
-          pronouns: 'he/him',
-          bio: `Hi, my name is Oliver Merham, and I'm currently a sophmore at Dublin High School. I'm passionate about many things, including volleyball, photography,and engineering. In addition to my hobbies, I have big aspirations for my future. I dream of attending prestigious universities at France and pursuing a career at NASA, working on groundbreaking projects like the Mars rover. My favorite quote, "Do stuff now that your future self will thank you for," as it is what I live by. Outside of academics and career aspirations, I enjoy spending time with friends and family, exploring new places, and immersing myself in creative pursuits. Whether it's capturing the perfect shot with my camera or engineering things to make my life and the life of other easier.`,
-          image: 'https://drive.google.com/uc?export=view&id=1c77S-lvipmObJmuDJPMHZiYHxcy7f_Wc',
-          email: 'olivermerham08@gmail.com',
-          portfolio: 'https://sites.google.com/mydusd.org/olivers-portfolio?usp=sharing',
-          tags: ['Development']
-        },
-        {
-          name: 'Alex Mao',
-          role: 'Active Intern',
-          pronouns: 'he/him',
-          bio: `As an active intern at Tri-Valley Tech, I'm immersed in hands-on projects that directly contribute to the organization's growth and success. My role is to support various teams by taking on tasks that help streamline operations and push forward innovative initiatives. Whether it's assisting with research, working on technical problems, or contributing to projects, I aim to add value by applying the skills I'm learning in real-time. At Tri-Valley Tech, the internship program is designed not just to build technical skills, but also to give interns like me a deep understanding of how different parts of the organization work together to achieve our goals.`,
-          image: 'https://drive.google.com/uc?export=view&id=1P4J435mzo47nGPNqgwq7kJLXKf6mOZvg',
-          email: 'alexmao2019@gmail.com',
-          social: 'Discord: swiftbutshaky',
-          tags: ['Development', 'UI/UX Development']
-        }
-      ],
-      design: [
-        {
-          name: 'Felix Brassard',
-          role: 'Marketing and Design',
-          pronouns: 'he/him',
-          bio: 'Hi my name is Felix Brassard and I am a student at Dublin High School. I am working with a few peers on an app known as StudyLeaf, which is an ai software that helps make study guides for you such as your very own quizlets. My role in this development is in marketing and design where I seek to advertise this app and also making anything related to the app look appealing to the audience.',
-          image: 'https://drive.google.com/uc?export=view&id=1IVeHxsUbMGOC23GVasWX28gjqMCCkZMm',
-          email: 'felixjiangbrassard@gmail.com',
-          tags: ['Graphic Design', 'Marketing']
-        },
-        {
-          name: 'Tanvi Vangaru',
-          role: 'Intern (Designing)',
-          pronouns: 'she/her',
-          bio: 'I have experience in design, including creating a logo for an app that provides personalized haircare assistance. Through this project, I developed skills in visual branding, creativity, and user-focused design. At TVT, I hope to further apply and expand my design abilities across the company, contributing to various creative projects and enhancing the overall design.',
-          image: 'https://drive.google.com/uc?export=view&id=1oCmcykY1SSYZI0V5LqoCrT4WTpTAYnh_',
-          email: 't.vangaru2009@gmail.com',
-          linkedin: 'https://www.linkedin.com/in/tanvi-vangaru-2434b3349/',
-          social: '@tanvivangaru - instagram',
-          tags: ['Graphic Design', 'Marketing']
-        },
-        {
-          name: 'Purandhar Ayalasomayajula',
-          role: 'Active Intern',
-          pronouns: 'he/him',
-          bio: 'My name is Purandhar and I am an 8th grader at Wells Middle School. I joined the TVT by introduction from Nikhilesh Suravarjjala. Some of my skills include Design, Marketing, and assistance for others.',
-          image: 'https://drive.google.com/uc?export=view&id=1_J375w6wGW5vALgHJ-4ORONccUmH-uY9',
-          email: 'purandharayalasomayajula1@gmail.com',
-          tags: ['Graphic Design', 'Marketing']
-        }
-      ]
-    };
-
-    return (
-      <div className="py-16 bg-[#161c24]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h2 className="text-3xl font-extrabold text-white sm:text-4xl">Our Team</h2>
-            <p className="mt-4 text-xl text-gray-300">
-              Meet the passionate individuals behind Tri-Valley Tech
-            </p>
-          </div>
-
-          {/* Chief Suite Section */}
-          <div className="mt-12">
-            <h3 className="text-2xl font-bold text-white mb-8">Chief Suite</h3>
-            <div className="grid grid-cols-1 gap-12 lg:grid-cols-3 lg:gap-8">
-              {teamMembers.chiefSuite.map((member, index) => (
-                <TeamMember key={index} {...member} />
-              ))}
-            </div>
-          </div>
-
-          {/* Officers Section */}
-          <div className="mt-16">
-            <h3 className="text-2xl font-bold text-white mb-8">Officers</h3>
-            <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-8">
-              {teamMembers.officers.map((member, index) => (
-                <TeamMember key={index} {...member} />
-              ))}
-            </div>
-          </div>
-
-          {/* Development Section */}
-          <div className="mt-16">
-            <h3 className="text-2xl font-bold text-white mb-8">Development</h3>
-            <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-8">
-              {teamMembers.development.map((member, index) => (
-                <TeamMember key={index} {...member} />
-              ))}
-            </div>
-          </div>
-
-          {/* Graphic Design and Socials Section */}
-          <div className="mt-16">
-            <h3 className="text-2xl font-bold text-white mb-8">Graphic Design and Socials</h3>
-            <div className="grid grid-cols-1 gap-12 lg:grid-cols-3 lg:gap-8">
-              {teamMembers.design.map((member, index) => (
-                <TeamMember key={index} {...member} />
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  };
-
   const AppContent = () => {
-    const { isDark } = useTheme();
-    
     return (
       <div className="font-sans transition-colors duration-300 bg-[var(--bg-primary)] text-[var(--text-primary)]">
         <ScrollFadeIn delay={0.2}>
@@ -1009,7 +834,12 @@ We envision a world where every student has the opportunity to explore their pas
           </ScrollFadeIn>
           <ScrollFadeIn>
             <section id="impact">
-              <Impact />
+              <ImpactPreview />
+            </section>
+          </ScrollFadeIn>
+          <ScrollFadeIn>
+            <section id="gallery">
+              <GalleryPreview />
             </section>
           </ScrollFadeIn>
           <ScrollFadeIn>
@@ -1034,5 +864,5 @@ We envision a world where every student has the opportunity to explore their pas
     return <AppContent />;
   };
 
-export { Header, Footer };
+export { Header, Footer, ContactForm };
 export default Web;
