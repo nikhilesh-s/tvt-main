@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Header, Footer } from './page.jsx';
+import { useLocation } from 'react-router-dom';
 
 const resources = [
   {
@@ -31,6 +32,20 @@ const resources = [
 ];
 
 const ResourcesPage = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const section = params.get('section');
+    if (!section) {
+      return;
+    }
+    const target = document.getElementById(section);
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, [location.search]);
+
   return (
     <div className="min-h-screen bg-[var(--bg-primary)] relative overflow-hidden">
       <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>

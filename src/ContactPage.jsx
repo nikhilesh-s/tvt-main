@@ -23,7 +23,7 @@ const ContactPage = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
         >
-          Tri-Valley Tech is a 501(c)(3) nonprofit organization based in California.
+          Tri-Valley Tech is a 501(c)(3) nonprofit organization based in the East Bay.
         </motion.p>
       </main>
       <ContactForm />

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Users, Rocket, Menu, X, Lightbulb, Send, Globe, ArrowRight, MessageCircle, Star, FileText, BarChart, Sun, Moon, Facebook, Twitter, Instagram, Linkedin, Book } from 'lucide-react';
-import { FaChevronDown } from 'react-icons/fa';
 import ScrollFadeIn from './Fade.jsx';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import logo from './images/logo2.svg';
+import whyJoinPhoto from './images/oliver.jpg';
 
 import { useTheme } from './ThemeContext';
 
@@ -37,10 +37,21 @@ styles.textContent = `
 `;
 document.head.appendChild(styles);
 
+const scrollToSection = (sectionId) => {
+  const element = document.getElementById(sectionId);
+  if (element) {
+    element.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
+  }
+};
+
 const Header = () => {
   const { isDark, toggleTheme } = useTheme();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -50,20 +61,31 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const handleSectionNav = (sectionId) => {
+    const onHome = window.location.hash === '#/' || window.location.hash === '' || window.location.hash === '#';
+    if (onHome) {
+      scrollToSection(sectionId);
+      return;
+    }
+    navigate('/');
+    setTimeout(() => scrollToSection(sectionId), 150);
+  };
+
   const navItems = [
-    { name: 'Why Join TVT?', icon: <Users size={20} />, to: '/why-join' },
-    { name: 'Impact', icon: <BarChart size={20} />, to: '/impact' },
+    { name: 'Why Join TVT?', icon: <Users size={20} />, onClick: () => handleSectionNav('why') },
+    { name: 'Impact', icon: <BarChart size={20} />, onClick: () => handleSectionNav('impact') },
     { name: 'Articles', icon: <FileText size={20} />, to: '/articles' },
     { name: 'Gallery', icon: <FileText size={20} />, to: '/gallery' },
     {
       name: 'Digital Resources',
       icon: <FileText size={20} />,
+      to: '/resources',
       children: [
-        { name: 'Digital Footprint Guide', to: '/resources#digital-footprint' },
-        { name: 'Email Safety Tips', to: '/resources#email-safety' },
-        { name: 'Online Privacy Guide', to: '/resources#online-privacy' },
-        { name: 'Password Security Guide', to: '/resources#password-security' },
-        { name: 'Phishing Prevention Guide', to: '/resources#phishing-prevention' }
+        { name: 'Digital Footprint Guide', to: '/resources?section=digital-footprint' },
+        { name: 'Email Safety Tips', to: '/resources?section=email-safety' },
+        { name: 'Online Privacy Guide', to: '/resources?section=online-privacy' },
+        { name: 'Password Security Guide', to: '/resources?section=password-security' },
+        { name: 'Phishing Prevention Guide', to: '/resources?section=phishing-prevention' }
       ]
     },
     { name: 'Team', icon: <Users size={20} />, to: '/team' },
@@ -75,10 +97,14 @@ const Header = () => {
       if (isMobile) {
         return (
           <div className="px-4 py-2 rounded-2xl bg-[var(--bg-secondary)]/60 border border-[var(--accent-primary)]/10">
-            <div className="flex items-center text-[var(--text-secondary)] mb-2">
+            <Link
+              to={item.to}
+              className="flex items-center text-[var(--text-secondary)] mb-2 hover:text-[var(--accent-primary)] transition-colors"
+              onClick={onClick}
+            >
               {React.cloneElement(item.icon, { className: "mr-2" })}
               {item.name}
-            </div>
+            </Link>
             <div className="flex flex-col gap-2">
               {item.children.map((child) => (
                 <Link
@@ -97,10 +123,13 @@ const Header = () => {
 
       return (
         <div className="relative group">
-          <button className="px-4 py-2 rounded-full transition-all duration-200 flex items-center text-[var(--text-secondary)] hover:text-[var(--accent-primary)] hover:bg-[var(--accent-primary)]/5">
+          <Link
+            to={item.to}
+            className="px-4 py-2 rounded-full transition-all duration-200 flex items-center text-[var(--text-secondary)] hover:text-[var(--accent-primary)] hover:bg-[var(--accent-primary)]/5"
+          >
             {React.cloneElement(item.icon, { className: "mr-2" })}
             {item.name}
-          </button>
+          </Link>
           <div className="absolute left-0 mt-2 w-64 rounded-2xl bg-[var(--bg-primary)] border border-[var(--accent-primary)]/10 shadow-xl opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-opacity duration-200">
             <div className="p-3 flex flex-col gap-1">
               {item.children.map((child) => (
@@ -232,35 +261,39 @@ const Header = () => {
   );
 };
 
-const RotatingCube = () => (
+const RotatingCube = () => {
+  const { isDark } = useTheme();
+  const textClass = isDark ? 'text-white' : 'text-[var(--text-primary)]';
+
+  return (
     <div className="scene">
       <div className="cube">
-        <div className="cube__face cube__face--front">
+        <div className={`cube__face cube__face--front ${textClass}`}>
           <Users size={48} />
           <p>Collaborative Community</p>
         </div>
-        <div className="cube__face cube__face--back">
+        <div className={`cube__face cube__face--back ${textClass}`}>
           <Rocket size={48} />
           <p>Innovative Projects</p>
         </div>
-        <div className="cube__face cube__face--right">
+        <div className={`cube__face cube__face--right ${textClass}`}>
           <Lightbulb size={48} />
           <p>Skill Development</p>
         </div>
-        <div className="cube__face cube__face--left">
+        <div className={`cube__face cube__face--left ${textClass}`}>
           <Globe size={48} />
           <p>Global Impact</p>
         </div>
-        <div className="cube__face cube__face--top">
+        <div className={`cube__face cube__face--top ${textClass}`}>
           <img src={logo} alt="Tri-Valley Tech Logo" className="w-150 h-150" />
         </div>
-        <div className="cube__face cube__face--bottom">
-        <img src={logo} alt="Tri-Valley Tech Logo" className="w-150 h-150" />
-          {/*<p className="text-lg font-bold">Tri-Valley Tech</p>*/}
+        <div className={`cube__face cube__face--bottom ${textClass}`}>
+          <img src={logo} alt="Tri-Valley Tech Logo" className="w-150 h-150" />
         </div>
       </div>
     </div>
   );
+};
 
 
 const Hero = () => {
@@ -301,7 +334,7 @@ const Hero = () => {
             transition={{ duration: 0.5, delay: 0.4 }}
           >
             <a
-              href="https://discord.gg/7ArGszd4FZ"
+              href="https://discord.gg/n6TCxpCGqM"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-[var(--accent-primary)] text-white px-8 py-3 rounded-full font-semibold hover:bg-[var(--accent-secondary)] transition-colors duration-300 flex items-center gap-2 shadow-lg hover:shadow-xl"
@@ -377,6 +410,21 @@ const Hero = () => {
             </p>
           </motion.div>
 
+          <motion.div
+            className="max-w-5xl mx-auto mb-12"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <div className="rounded-3xl overflow-hidden border border-[var(--accent-primary)]/20 shadow-2xl">
+              <img
+                src={whyJoinPhoto}
+                alt="Tri-Valley Tech students working on a project"
+                className="w-full h-[320px] md:h-[420px] object-cover"
+              />
+            </div>
+          </motion.div>
+
           <div className="text-center mb-8">
             <h3 className="text-3xl font-bold text-[var(--text-primary)]">What You'll Get</h3>
           </div>
@@ -431,58 +479,6 @@ const Hero = () => {
   
 
 
-  const AboutUs = () => {
-    const [isExpanded, setIsExpanded] = useState(false);
-    const mainContent = "Tri-Valley Tech exists for one purpose: empowering young innovators to turn ideas into real impact. Everything we build is meant to be practical, meaningful, and student-driven.";
-  
-    const expandedContent = `Tri-Valley Tech gives students the chance to do real work, not just learn about it. From apps and websites to engineering and cyber tools, we provide the space, mentorship, and momentum to ship real projects.
-
-We focus on three things: learning, building, and making an impact. Each initiative is designed to help students grow their skills while delivering tangible outcomes for their communities.
-
-Our vision is a future shaped by students who are ready to take action today. Through collaboration, leadership, and meaningful execution, we're building a community of young innovators who are prepared to lead.`;
-
-    return (
-      <section id="about" className="py-20 bg-[var(--bg-secondary)]">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="max-w-4xl mx-auto text-center"
-          >
-            <h2 className="text-4xl font-bold mb-8 bg-gradient-to-r from-[var(--accent-primary)] to-[var(--accent-secondary)] text-transparent bg-clip-text">About Us</h2>
-            <p className="text-lg mb-4 text-[var(--text-secondary)]">{mainContent}</p>
-            <button
-              onClick={() => setIsExpanded(!isExpanded)}
-              className="text-[var(--accent-primary)] hover:text-[var(--accent-secondary)] transition-colors flex items-center mx-auto"
-            >
-              {isExpanded ? 'Show Less' : 'Read More'}
-              <motion.span
-                animate={{ rotate: isExpanded ? 180 : 0 }}
-                transition={{ duration: 0.3 }}
-                className="ml-2"
-              >
-                <FaChevronDown />
-              </motion.span>
-            </button>
-            <AnimatePresence>
-              {isExpanded && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.3 }}
-                  className="mt-8"
-                >
-                  <p className="text-lg text-[var(--text-secondary)] whitespace-pre-line leading-relaxed">{expandedContent}</p>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </motion.div>
-        </div>
-      </section>
-    );
-  };
   const CTA = () => (
     <section id="join" className="py-20 bg-[var(--bg-secondary)] circuit-pattern">
       <div className="container mx-auto text-center px-4">
@@ -503,7 +499,7 @@ Our vision is a future shaped by students who are ready to take action today. Th
           If you've ever wanted to create something meaningful, TVT gives you the tools, the team, and the momentum to make it happen.
         </motion.p>
         <motion.a
-          href="https://discord.gg/7ArGszd4FZ"
+          href="https://discord.gg/n6TCxpCGqM"
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center px-8 py-3 bg-[var(--accent-primary)] text-white rounded-full font-semibold hover:bg-[var(--accent-secondary)] transition-all duration-200"
@@ -695,7 +691,7 @@ Our vision is a future shaped by students who are ready to take action today. Th
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center text-purple-400 mb-8">Send Us a Message</h2>
           <p className="text-center text-[var(--text-secondary)] mb-6">
-            Tri-Valley Tech is a 501(c)(3) nonprofit organization based in California.
+            Tri-Valley Tech is a 501(c)(3) nonprofit organization based in the East Bay.
           </p>
           <div className="text-center text-[var(--text-secondary)] mb-10">
             <p>Email: trivalleytechnology@gmail.com</p>
@@ -761,13 +757,15 @@ Our vision is a future shaped by students who are ready to take action today. Th
           <div>
             <h3 className="text-xl font-bold text-[var(--accent-primary)] mb-4">Tri-Valley Tech</h3>
             <p className="text-sm">Empowering high school innovators to create real-world impact through collaborative projects.</p>
-            <p className="text-sm mt-2">Tri-Valley Tech is a 501(c)(3) nonprofit organization based in California.</p>
+            <p className="text-sm mt-2">Tri-Valley Tech is a 501(c)(3) nonprofit organization based in the East Bay.</p>
           </div>
           <div>
             <h4 className="text-lg font-semibold text-[var(--accent-primary)] mb-4">Quick Links</h4>
             <div className="space-y-8">
               <ul className="space-y-2">
                 <li><Link to="/articles" className="hover:text-purple-300 transition duration-300">Articles</Link></li>
+                <li><Link to="/gallery" className="hover:text-purple-300 transition duration-300">Gallery</Link></li>
+                <li><Link to="/resources" className="hover:text-purple-300 transition duration-300">Digital Resources</Link></li>
                 <li><Link to="/team" className="hover:text-purple-300 transition duration-300">Team</Link></li>
                 <li><Link to="/projects" className="hover:text-purple-300 transition duration-300">Projects</Link></li>
                 <li><Link to="/contact" className="hover:text-purple-300 transition duration-300">Contact</Link></li>
@@ -783,10 +781,10 @@ Our vision is a future shaped by students who are ready to take action today. Th
             <h4 className="text-lg font-semibold text-[var(--accent-primary)] mb-4">Follow Us</h4>
             <div className="flex space-x-4">
               {[
-                { icon: <Facebook size={20} />, href: "https://facebook.com" },
-                { icon: <Twitter size={20} />, href: "https://twitter.com" },
-                { icon: <Instagram size={20} />, href: "https://www.instagram.com/trivalleytech/profilecard/?igsh=NTc4MTIwNjQ2YQ==" },
-                { icon: <Linkedin size={20} />, href: "https://linkedin.com" },
+                { icon: <Facebook size={20} />, href: "https://www.facebook.com/trivalleytech" },
+                { icon: <Twitter size={20} />, href: "https://x.com/trivalleytech" },
+                { icon: <Instagram size={20} />, href: "https://www.instagram.com/trivalleytech/" },
+                { icon: <Linkedin size={20} />, href: "https://www.linkedin.com/company/tri-valley-tech" },
               ].map((social, index) => (
                 <motion.a
                   key={index}
@@ -825,11 +823,6 @@ Our vision is a future shaped by students who are ready to take action today. Th
           <ScrollFadeIn>
             <section id="why">
               <Why />
-            </section>
-          </ScrollFadeIn>
-          <ScrollFadeIn>
-            <section id="about">
-              <AboutUs />
             </section>
           </ScrollFadeIn>
           <ScrollFadeIn>
