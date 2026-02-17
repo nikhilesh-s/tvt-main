@@ -6,11 +6,9 @@ import { useState } from 'react';
 // Import officer images
 import officer1Image from './images/amir.png';
 import siddharthImage from './images/siddharth.jpg';
-import officer3Image from './images/nik.webp';
-import elijahImage from './images/logo2.svg';
-
-// Import officer images
-import divaImage from './images/diva.jpg';
+const nikImage = 'https://i.imgur.com/BjjzPXF.jpeg';
+const divaImage = 'https://i.imgur.com/9wrRYYT.jpeg';
+const elijahImage = 'https://i.imgur.com/sNX90Dy.jpeg';
 
 
 // Split data into Leadership Team
@@ -19,7 +17,7 @@ const chiefSuiteData = [
     id: 1,
     name: "Nikhilesh Suravarjjala",
     role: "CEO",
-    image: officer3Image,
+    image: nikImage,
     description: "Hey, I'm Nikhilesh Suravarjjala. Tri-Valley Tech is the space where I bring ideas to life; from websites and apps to full community projects. I've always enjoyed building things that blend creativity with real impact, and TVT lets me do that while leading a team that's learning and growing alongside me. What matters to me most is creating tools and experiences that genuinely help people; whether that's a clean user interface, a simple app that solves a real problem, or an event that brings young people together. TVT is where I get to explore design, development, and leadership all at once, and I'm proud of the direction we're heading.",
     badges: ["Leadership", "Design", "Development"]
   },

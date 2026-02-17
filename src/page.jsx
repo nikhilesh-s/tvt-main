@@ -4,7 +4,6 @@ import { Users, Rocket, Menu, X, Lightbulb, Send, Globe, ArrowRight, MessageCirc
 import ScrollFadeIn from './Fade.jsx';
 import { Link, useNavigate } from 'react-router-dom';
 import logo from './images/logo2.svg';
-import whyJoinPhoto from './images/oliver.jpg';
 
 import { useTheme } from './ThemeContext';
 
@@ -342,13 +341,16 @@ const Hero = () => {
               Get Started
               <ArrowRight className="ml-2" />
             </a>
-            <Link
-              to="/why-join"
+            <button
+              type="button"
               className="border border-[var(--accent-primary)] text-[var(--accent-primary)] px-8 py-3 rounded-full font-semibold hover:bg-[var(--accent-primary)]/10 transition-colors duration-300 flex items-center gap-2"
+              onClick={() => {
+                scrollToSection('why');
+              }}
             >
               Why Join
               <ArrowRight className="ml-2" />
-            </Link>
+            </button>
           </motion.div>
         </div>
         <div className="md:w-1/2 flex justify-center">
@@ -410,21 +412,6 @@ const Hero = () => {
             </p>
           </motion.div>
 
-          <motion.div
-            className="max-w-5xl mx-auto mb-12"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <div className="rounded-3xl overflow-hidden border border-[var(--accent-primary)]/20 shadow-2xl">
-              <img
-                src={whyJoinPhoto}
-                alt="Tri-Valley Tech students working on a project"
-                className="w-full h-[320px] md:h-[420px] object-cover"
-              />
-            </div>
-          </motion.div>
-
           <div className="text-center mb-8">
             <h3 className="text-3xl font-bold text-[var(--text-primary)]">What You'll Get</h3>
           </div>
@@ -458,20 +445,6 @@ const Hero = () => {
             ))}
           </div>
 
-          <motion.div 
-            className="max-w-3xl mx-auto text-center"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <Link
-              to="/why-join"
-              className="inline-flex items-center gap-2 text-[var(--accent-primary)] hover:text-[var(--accent-secondary)] transition-colors"
-            >
-              Explore the full Why Join page
-              <ArrowRight size={18} />
-            </Link>
-          </motion.div>
         </div>
       </section>
     );
@@ -553,13 +526,9 @@ const Hero = () => {
               whileHover={{ y: -5, transition: { duration: 0.2 } }}
             >
               <h3 className="text-2xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500">{item.title}</h3>
-              <p className="text-[var(--text-secondary)] leading-relaxed mb-6">
+              <p className="text-[var(--text-secondary)] leading-relaxed">
                 {item.description}
               </p>
-              <Link to="/impact" className="inline-flex items-center gap-2 text-[var(--accent-primary)] hover:text-[var(--accent-secondary)] transition-colors">
-                Learn more
-                <ArrowRight size={18} />
-              </Link>
             </motion.div>
           ))}
         </div>
