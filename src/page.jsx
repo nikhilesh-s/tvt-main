@@ -570,10 +570,10 @@ const Hero = () => {
 
   const GalleryCarousel = () => {
     const slides = [
-      { title: "Workshops", image: "https://via.placeholder.com/1200x700?text=Workshops" },
-      { title: "App Launches", image: "https://via.placeholder.com/1200x700?text=App+Launches" },
-      { title: "Mentorship Sessions", image: "https://via.placeholder.com/1200x700?text=Mentorship+Sessions" },
-      { title: "Community Outreach", image: "https://via.placeholder.com/1200x700?text=Community+Outreach" }
+      { title: "DHS GirlsWhoCode Workshop", image: "https://i.imgur.com/nkvYjWt.jpeg" },
+      { title: "East Dublin Girls in STEM Workshop", image: "https://i.imgur.com/Ac5zk7A.jpeg" },
+      { title: "App & Website Demos (Coming Soon)", image: logo, isPlaceholder: true },
+      { title: "Chapter Meetings (Coming Soon)", image: logo, isPlaceholder: true }
     ];
     const [activeIndex, setActiveIndex] = useState(0);
     const totalSlides = slides.length;
@@ -599,14 +599,14 @@ const Hero = () => {
             Gallery Preview
           </h2>
           <p className="text-[var(--text-secondary)] text-lg leading-relaxed">
-            Take a look at what we've been building. From workshops to app launches to behind-the-scenes moments, here's a glimpse into life at Tri-Valley Tech.
+            Take a look at what we've been building through workshops, mentorship, outreach, and chapter collaboration.
           </p>
         </div>
         <div className="relative rounded-3xl overflow-hidden border border-[var(--accent-primary)]/20 shadow-2xl bg-[var(--bg-secondary)]">
           <img
             src={activeSlide.image}
             alt={activeSlide.title}
-            className="w-full h-[360px] sm:h-[460px] object-cover"
+            className={`w-full h-[360px] sm:h-[460px] ${activeSlide.isPlaceholder ? 'object-contain p-10 bg-[var(--bg-primary)]' : 'object-cover'}`}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent"></div>
           <div className="absolute bottom-0 left-0 right-0 p-8 flex items-center justify-between">
