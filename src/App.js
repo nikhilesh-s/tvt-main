@@ -14,6 +14,7 @@ import Chapters from './Chapters.jsx';
 import ChapterDetail from './ChapterDetail.jsx';
 import ContactPage from './ContactPage.jsx';
 import ResourcesPage from './ResourcesPage.jsx';
+import ProjectProposalPage from './ProjectProposalPage.jsx';
 
 function App() {
      if (sessionStorage.redirect) {
@@ -40,6 +41,7 @@ function App() {
           <Route path="/chapters/:chapterId" element={<ChapterDetail />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/resources" element={<ResourcesPage />} />
+          <Route path="/project-proposal" element={<ProjectProposalPage />} />
         </Routes>
       </Router>
     </ThemeProvider>

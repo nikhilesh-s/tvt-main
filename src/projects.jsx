@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { Header, Footer } from './page.jsx';
 
 const ProjectsPage = () => {
@@ -30,6 +31,22 @@ const ProjectsPage = () => {
       <main className="flex-grow py-20 px-4 relative z-10">
         <div className="container mx-auto">
           <h1 className="text-4xl font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500 mb-12">Projects</h1>
+          <div className="max-w-5xl mx-auto mb-10">
+            <div className="bg-[var(--bg-secondary)] rounded-2xl p-6 border border-[var(--accent-primary)]/20 shadow-lg flex flex-col md:flex-row gap-4 md:items-center md:justify-between">
+              <div>
+                <h2 className="text-2xl font-bold text-[var(--accent-primary)] mb-1">Have an idea worth building?</h2>
+                <p className="text-[var(--text-secondary)]">
+                  Submit a structured proposal and we can move it into review, team assignment, and execution.
+                </p>
+              </div>
+              <Link
+                to="/project-proposal"
+                className="inline-flex items-center justify-center px-6 py-3 rounded-full bg-[var(--accent-primary)] text-white font-semibold hover:bg-[var(--accent-secondary)] transition-colors whitespace-nowrap"
+              >
+                Submit Proposal
+              </Link>
+            </div>
+          </div>
 
           <div className="space-y-12 max-w-5xl mx-auto">
             <motion.section

@@ -87,6 +87,7 @@ const Header = () => {
         { name: 'Phishing Prevention Guide', to: '/resources?section=phishing-prevention' }
       ]
     },
+    { name: 'Project Proposal', icon: <Lightbulb size={20} />, to: '/project-proposal' },
     { name: 'Team', icon: <Users size={20} />, to: '/team' },
     { name: 'Contact', icon: <MessageCircle size={20} />, to: '/contact' },
   ];
@@ -333,12 +334,12 @@ const Hero = () => {
             transition={{ duration: 0.5, delay: 0.4 }}
           >
             <a
-              href="https://discord.gg/n6TCxpCGqM"
+              href="https://discord.gg/qR8EpM49eJ"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-[var(--accent-primary)] text-white px-8 py-3 rounded-full font-semibold hover:bg-[var(--accent-secondary)] transition-colors duration-300 flex items-center gap-2 shadow-lg hover:shadow-xl"
             >
-              Get Started
+              Join Now
               <ArrowRight className="ml-2" />
             </a>
             <button
@@ -351,6 +352,13 @@ const Hero = () => {
               Why Join
               <ArrowRight className="ml-2" />
             </button>
+            <Link
+              to="/project-proposal"
+              className="border border-[var(--accent-primary)] text-[var(--accent-primary)] px-8 py-3 rounded-full font-semibold hover:bg-[var(--accent-primary)]/10 transition-colors duration-300 flex items-center gap-2"
+            >
+              Submit Proposal
+              <ArrowRight className="ml-2" />
+            </Link>
           </motion.div>
         </div>
         <div className="md:w-1/2 flex justify-center">
@@ -471,19 +479,33 @@ const Hero = () => {
         >
           If you've ever wanted to create something meaningful, TVT gives you the tools, the team, and the momentum to make it happen.
         </motion.p>
-        <motion.a
-          href="https://discord.gg/n6TCxpCGqM"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center px-8 py-3 bg-[var(--accent-primary)] text-white rounded-full font-semibold hover:bg-[var(--accent-secondary)] transition-all duration-200"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-        >
-          Get Started
-        </motion.a>
+        <div className="flex flex-wrap items-center justify-center gap-4">
+          <motion.a
+            href="https://discord.gg/qR8EpM49eJ"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center px-8 py-3 bg-[var(--accent-primary)] text-white rounded-full font-semibold hover:bg-[var(--accent-secondary)] transition-all duration-200"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            Join Now
+          </motion.a>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.25 }}
+          >
+            <Link
+              to="/project-proposal"
+              className="inline-flex items-center px-8 py-3 border border-[var(--accent-primary)] text-[var(--accent-primary)] rounded-full font-semibold hover:bg-[var(--accent-primary)]/10 transition-all duration-200"
+            >
+              Submit a Project Proposal
+            </Link>
+          </motion.div>
+        </div>
       </div>
     </section>
   );
@@ -531,6 +553,15 @@ const Hero = () => {
               </p>
             </motion.div>
           ))}
+        </div>
+        <div className="text-center mt-10">
+          <Link
+            to="/project-proposal"
+            className="inline-flex items-center gap-2 bg-[var(--accent-primary)] text-white px-7 py-3 rounded-full font-semibold hover:bg-[var(--accent-secondary)] transition-colors"
+          >
+            Pitch a Project Idea
+            <ArrowRight size={18} />
+          </Link>
         </div>
       </div>
     </section>
@@ -737,6 +768,7 @@ const Hero = () => {
                 <li><Link to="/resources" className="hover:text-purple-300 transition duration-300">Digital Resources</Link></li>
                 <li><Link to="/team" className="hover:text-purple-300 transition duration-300">Team</Link></li>
                 <li><Link to="/projects" className="hover:text-purple-300 transition duration-300">Projects</Link></li>
+                <li><Link to="/project-proposal" className="hover:text-purple-300 transition duration-300">Project Proposal</Link></li>
                 <li><Link to="/contact" className="hover:text-purple-300 transition duration-300">Contact</Link></li>
               </ul>
             </div>
