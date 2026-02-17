@@ -3,8 +3,6 @@ import { motion } from 'framer-motion';
 import { Header, Footer } from './page.jsx';
 import logoPlaceholder from './images/logo2.svg';
 
-const demoFolderUrl = 'https://drive.google.com/drive/folders/1F8N9Ix7C04YoO0TwYrMuVaAqB-d74mbH?usp=drive_link';
-
 const gallerySections = [
   {
     id: 'mentorship-outreach',
@@ -37,7 +35,7 @@ const gallerySections = [
       {
         title: 'Coming Soon',
         detail:
-          'Diva Rawal will collect/upload images here. Upload folder is linked below.',
+          'Diva Rawal will collect/upload images here.',
         images: [
           { src: logoPlaceholder, alt: 'App and website demos placeholder', isPlaceholder: true }
         ]
@@ -97,15 +95,7 @@ const GalleryPage = () => {
 
               {section.id === 'app-website-demos' && (
                 <p className="text-sm text-[var(--text-secondary)] mb-6">
-                  Contact: <span className="font-semibold">diva.rawal@gmail.com</span> | Upload folder:{' '}
-                  <a
-                    href={demoFolderUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[var(--accent-primary)] hover:text-[var(--accent-secondary)]"
-                  >
-                    Open Google Drive Folder
-                  </a>
+                  Contact: <span className="font-semibold">diva.rawal@gmail.com</span>
                 </p>
               )}
 
