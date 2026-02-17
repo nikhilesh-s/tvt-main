@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Users, Rocket, Menu, X, Lightbulb, Send, Globe, ArrowRight, MessageCircle, Star, FileText, BarChart, Sun, Moon, Facebook, Twitter, Instagram, Linkedin, Book } from 'lucide-react';
+import { Users, Rocket, Menu, X, Lightbulb, Send, Globe, ArrowRight, MessageCircle, Star, FileText, BarChart, Sun, Moon, Instagram, Book } from 'lucide-react';
 import ScrollFadeIn from './Fade.jsx';
 import { Link, useNavigate } from 'react-router-dom';
 import logo from './images/logo2.svg';
@@ -787,24 +787,17 @@ const Hero = () => {
           <div>
             <h4 className="text-lg font-semibold text-[var(--accent-primary)] mb-4">Follow Us</h4>
             <div className="flex space-x-4">
-              {[
-                { icon: <Facebook size={20} />, href: "https://www.facebook.com/trivalleytech" },
-                { icon: <Twitter size={20} />, href: "https://x.com/trivalleytech" },
-                { icon: <Instagram size={20} />, href: "https://www.instagram.com/trivalleytech/" },
-                { icon: <Linkedin size={20} />, href: "https://www.linkedin.com/company/tri-valley-tech" },
-              ].map((social, index) => (
-                <motion.a
-                  key={index}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-purple-400 transition duration-300"
-                  whileHover={{ scale: 1.2 }}
-                  whileTap={{ scale: 0.9 }}
-                >
-                  {social.icon}
-                </motion.a>
-              ))}
+              <motion.a
+                href="https://www.instagram.com/trivalleytech?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-purple-400 transition duration-300"
+                whileHover={{ scale: 1.2 }}
+                whileTap={{ scale: 0.9 }}
+                aria-label="Tri-Valley Tech Instagram"
+              >
+                <Instagram size={20} />
+              </motion.a>
             </div>
           </div>
         </div>
