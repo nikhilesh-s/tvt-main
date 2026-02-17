@@ -2,8 +2,6 @@ import './App.css';
 import Web from './page.jsx'
 import ProjectsPage from './projects.jsx';
 import { HashRouter as Router, Route, Routes } from 'react-router-dom';
-import ArticlesPage from './Article.jsx';
-import ArticleDetail from './ArticleDetail.jsx';
 import TeamPage from './team.jsx';
 import { ThemeProvider } from './ThemeContext';
 import WhyJoin from './WhyJoin.jsx';
@@ -29,8 +27,6 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Web />} />
-          <Route path="/articles" element={<ArticlesPage />} />
-          <Route path="/articles/:slug" element={<ArticleDetail />} />
           <Route path="/team" element={<TeamPage />} />
           <Route path="/projects" element={<ProjectsPage />} />
           <Route path="/why-join" element={<WhyJoin />} />

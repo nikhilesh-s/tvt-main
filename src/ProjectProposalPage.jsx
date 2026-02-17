@@ -45,6 +45,8 @@ const initialFormState = {
 
 const ProjectProposalPage = () => {
   const [formData, setFormData] = useState(initialFormState);
+  const teamEmail = 'trivalleytechnology@gmail.com';
+  const gmailComposeUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${teamEmail}`;
 
   const submittedAt = useMemo(
     () => new Date().toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' }),
@@ -97,12 +99,19 @@ const ProjectProposalPage = () => {
     ];
 
     const body = encodeURIComponent(bodyLines.join('\n'));
-    return `mailto:trivalleytechnology@gmail.com?subject=${subject}&body=${body}`;
+    return `mailto:${teamEmail}?subject=${subject}&body=${body}`;
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     window.location.href = buildMailtoLink();
+  };
+
+  const scrollToProposalForm = () => {
+    const section = document.getElementById('proposal-form');
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   };
 
   return (
@@ -125,15 +134,18 @@ const ProjectProposalPage = () => {
             feasibility, potential impact, timeline, and fit.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-4">
-            <a
-              href="#proposal-form"
+            <button
+              type="button"
+              onClick={scrollToProposalForm}
               className="inline-flex items-center gap-2 bg-[var(--accent-primary)] text-white px-7 py-3 rounded-full font-semibold hover:bg-[var(--accent-secondary)] transition-colors"
             >
               Start Proposal
               <ArrowRight size={18} />
-            </a>
+            </button>
             <a
-              href="mailto:trivalleytechnology@gmail.com"
+              href={gmailComposeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 border border-[var(--accent-primary)] text-[var(--accent-primary)] px-7 py-3 rounded-full font-semibold hover:bg-[var(--accent-primary)]/10 transition-colors"
             >
               Email Team

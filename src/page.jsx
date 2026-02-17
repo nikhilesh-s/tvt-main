@@ -73,7 +73,6 @@ const Header = () => {
   const navItems = [
     { name: 'Why Join TVT?', icon: <Users size={20} />, onClick: () => handleSectionNav('why') },
     { name: 'Impact', icon: <BarChart size={20} />, onClick: () => handleSectionNav('impact') },
-    { name: 'Articles', icon: <FileText size={20} />, to: '/articles' },
     { name: 'Gallery', icon: <FileText size={20} />, to: '/gallery' },
     {
       name: 'Digital Resources',
@@ -328,30 +327,32 @@ const Hero = () => {
             Bring your ideas to life with Tri-Valley Tech.
           </motion.p>
           <motion.div
-            className="flex flex-wrap justify-center md:justify-start gap-4"
+            className="flex flex-col items-center md:items-start gap-4"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
           >
-            <a
-              href="https://discord.gg/qR8EpM49eJ"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-[var(--accent-primary)] text-white px-8 py-3 rounded-full font-semibold hover:bg-[var(--accent-secondary)] transition-colors duration-300 flex items-center gap-2 shadow-lg hover:shadow-xl"
-            >
-              Join Now
-              <ArrowRight className="ml-2" />
-            </a>
-            <button
-              type="button"
-              className="border border-[var(--accent-primary)] text-[var(--accent-primary)] px-8 py-3 rounded-full font-semibold hover:bg-[var(--accent-primary)]/10 transition-colors duration-300 flex items-center gap-2"
-              onClick={() => {
-                scrollToSection('why');
-              }}
-            >
-              Why Join
-              <ArrowRight className="ml-2" />
-            </button>
+            <div className="flex flex-wrap justify-center md:justify-start gap-4">
+              <a
+                href="https://discord.gg/qR8EpM49eJ"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-[var(--accent-primary)] text-white px-8 py-3 rounded-full font-semibold hover:bg-[var(--accent-secondary)] transition-colors duration-300 flex items-center gap-2 shadow-lg hover:shadow-xl"
+              >
+                Join Now
+                <ArrowRight className="ml-2" />
+              </a>
+              <button
+                type="button"
+                className="border border-[var(--accent-primary)] text-[var(--accent-primary)] px-8 py-3 rounded-full font-semibold hover:bg-[var(--accent-primary)]/10 transition-colors duration-300 flex items-center gap-2"
+                onClick={() => {
+                  scrollToSection('why');
+                }}
+              >
+                Why Join
+                <ArrowRight className="ml-2" />
+              </button>
+            </div>
             <Link
               to="/project-proposal"
               className="border border-[var(--accent-primary)] text-[var(--accent-primary)] px-8 py-3 rounded-full font-semibold hover:bg-[var(--accent-primary)]/10 transition-colors duration-300 flex items-center gap-2"
@@ -361,7 +362,7 @@ const Hero = () => {
             </Link>
           </motion.div>
         </div>
-        <div className="md:w-1/2 flex justify-center">
+        <div className="hidden md:flex md:w-1/2 justify-center">
           <RotatingCube />
         </div>
       </div>
@@ -679,11 +680,19 @@ const Hero = () => {
   
     const handleSubmit = (e) => {
       e.preventDefault();
-      //implement message sending here once backend is implemented
-      console.log('Form submitted:', formData);
-      
-      setFormData({ name: '', email: '', message: '' });
-      alert('Message sent successfully!');
+      const subject = encodeURIComponent(`TVT Contact Form: ${formData.name || 'New Message'}`);
+      const body = encodeURIComponent(
+        [
+          'Tri-Valley Tech Contact Form',
+          '',
+          `Name: ${formData.name}`,
+          `Email: ${formData.email}`,
+          '',
+          'Message:',
+          formData.message
+        ].join('\n')
+      );
+      window.location.href = `mailto:trivalleytechnology@gmail.com?subject=${subject}&body=${body}`;
     };
   
     return (
@@ -695,7 +704,6 @@ const Hero = () => {
           </p>
           <div className="text-center text-[var(--text-secondary)] mb-10">
             <p>Email: trivalleytechnology@gmail.com</p>
-            <p>Phone: (470) 609-2206</p>
           </div>
           <form onSubmit={handleSubmit} className="max-w-lg mx-auto contact-form relative z-10">
             <div className="mb-6">
@@ -763,7 +771,6 @@ const Hero = () => {
             <h4 className="text-lg font-semibold text-[var(--accent-primary)] mb-4">Quick Links</h4>
             <div className="space-y-8">
               <ul className="space-y-2">
-                <li><Link to="/articles" className="hover:text-purple-300 transition duration-300">Articles</Link></li>
                 <li><Link to="/gallery" className="hover:text-purple-300 transition duration-300">Gallery</Link></li>
                 <li><Link to="/resources" className="hover:text-purple-300 transition duration-300">Digital Resources</Link></li>
                 <li><Link to="/team" className="hover:text-purple-300 transition duration-300">Team</Link></li>
@@ -776,7 +783,6 @@ const Hero = () => {
           <div>
             <h4 className="text-lg font-semibold text-[var(--accent-primary)] mb-4">Contact Us</h4>
             <p className="text-sm">Email: trivalleytechnology@gmail.com</p>
-            <p className="text-sm">Phone: (470) 609-2206</p>
           </div>
           <div>
             <h4 className="text-lg font-semibold text-[var(--accent-primary)] mb-4">Follow Us</h4>
