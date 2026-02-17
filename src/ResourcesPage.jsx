@@ -7,27 +7,32 @@ const resources = [
   {
     id: "digital-footprint",
     title: "Digital Footprint Guide",
-    description: "How to build a positive online presence and manage what stays public."
+    description: "How to build a positive online presence and manage what stays public.",
+    link: "https://drive.google.com/file/d/1q0ty-lmPojDuLg9ZXqmzgrl3M-XGkV71/view?usp=sharing"
   },
   {
     id: "email-safety",
     title: "Email Safety Tips",
-    description: "Simple habits that keep your inbox and accounts secure."
+    description: "Simple habits that keep your inbox and accounts secure.",
+    link: "https://drive.google.com/file/d/1Fjy9UzH1TWgHawJwnPx002fh5S8xRsyx/view?usp=sharing"
   },
   {
     id: "online-privacy",
     title: "Online Privacy Guide",
-    description: "Protect personal information with smart, practical settings."
+    description: "Protect personal information with smart, practical settings.",
+    link: "https://drive.google.com/file/d/1STX7Il7YmFMJGdd-LmR4JIbGacIP52D1/view?usp=sharing"
   },
   {
     id: "password-security",
     title: "Password Security Guide",
-    description: "Create strong passwords and store them safely."
+    description: "Create strong passwords and store them safely.",
+    link: "https://drive.google.com/file/d/1qrzcaqNsKvc83IvWOis8Xc7GN_jwxT9x/view?usp=sharing"
   },
   {
     id: "phishing-prevention",
     title: "Phishing Prevention Guide",
-    description: "Spot and avoid common scams targeting students."
+    description: "Spot and avoid common scams targeting students.",
+    link: "https://drive.google.com/file/d/13u8Kf1yVfvwHSpFvJZ6_4kTOhxREkixK/view?usp=sharing"
   }
 ];
 
@@ -80,9 +85,14 @@ const ResourcesPage = () => {
             >
               <h2 className="text-2xl font-bold text-[var(--text-primary)] mb-2">{resource.title}</h2>
               <p className="text-[var(--text-secondary)] mb-4">{resource.description}</p>
-              <button className="text-[var(--accent-primary)] hover:text-[var(--accent-secondary)] transition-colors">
-                Download coming soon ->
-              </button>
+              <a
+                href={resource.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[var(--accent-primary)] hover:text-[var(--accent-secondary)] transition-colors"
+              >
+                view downloadable PDF now
+              </a>
             </motion.section>
           ))}
         </div>
