@@ -34,7 +34,7 @@ const chiefSuiteData = [
     name: "Diva Rawal",
     role: "COO",
     image: divaImage,
-    imagePosition: "center 38%",
+    imagePosition: "center 62%",
     description: "Hi, I'm Diva Rawal and at Tri-Valley Tech I focus on operations and executing our team's ideas. My primary role involves working closely with our chapter leads and interns to set structure, align goals, and support teams as they move from planning to real outcomes. I enjoy mentoring others and seeing individuals grow into confident leaders, which is what makes this work meaningful to me. I'm excited to continue growing Tri-Valley Tech and supporting students as we expand our impact.",
     badges: ["Operations", "Leadership", "Mentorship"]
   },
