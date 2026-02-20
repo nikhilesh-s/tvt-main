@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Users, Rocket, Menu, X, Lightbulb, Send, Globe, ArrowRight, MessageCircle, Star, FileText, BarChart, Sun, Moon, Instagram, Book } from 'lucide-react';
 import ScrollFadeIn from './Fade.jsx';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import logo from './images/logo2.svg';
 
 import { useTheme } from './ThemeContext';
@@ -36,12 +36,19 @@ styles.textContent = `
 `;
 document.head.appendChild(styles);
 
-const scrollToSection = (sectionId) => {
+const NAV_SCROLL_OFFSET = 112;
+
+const scrollToSection = (sectionId, offset = NAV_SCROLL_OFFSET) => {
   const element = document.getElementById(sectionId);
   if (element) {
-    element.scrollIntoView({
+    const targetTop = Math.max(
+      element.getBoundingClientRect().top + window.scrollY - offset,
+      0
+    );
+
+    window.scrollTo({
+      top: targetTop,
       behavior: 'smooth',
-      block: 'start',
     });
   }
 };
@@ -51,6 +58,7 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -61,13 +69,13 @@ const Header = () => {
   }, []);
 
   const handleSectionNav = (sectionId) => {
-    const onHome = window.location.hash === '#/' || window.location.hash === '' || window.location.hash === '#';
+    const onHome = location.pathname === '/';
     if (onHome) {
       scrollToSection(sectionId);
       return;
     }
     navigate('/');
-    setTimeout(() => scrollToSection(sectionId), 150);
+    setTimeout(() => scrollToSection(sectionId), 220);
   };
 
   const navItems = [
@@ -98,7 +106,7 @@ const Header = () => {
           <div className="px-4 py-2 rounded-2xl bg-[var(--bg-secondary)]/60 border border-[var(--accent-primary)]/10">
             <Link
               to={item.to}
-              className="flex items-center text-[var(--text-secondary)] mb-2 hover:text-[var(--accent-primary)] transition-colors"
+              className="flex items-center text-[var(--text-secondary)] mb-2 hover:text-[var(--accent-primary)] transition-colors whitespace-nowrap"
               onClick={onClick}
             >
               {React.cloneElement(item.icon, { className: "mr-2" })}
@@ -124,7 +132,7 @@ const Header = () => {
         <div className="relative group">
           <Link
             to={item.to}
-            className="px-4 py-2 rounded-full transition-all duration-200 flex items-center text-[var(--text-secondary)] hover:text-[var(--accent-primary)] hover:bg-[var(--accent-primary)]/5"
+            className="px-4 py-2 rounded-full transition-all duration-200 flex items-center text-sm xl:text-base text-[var(--text-secondary)] hover:text-[var(--accent-primary)] hover:bg-[var(--accent-primary)]/5 whitespace-nowrap shrink-0"
           >
             {React.cloneElement(item.icon, { className: "mr-2" })}
             {item.name}
@@ -148,7 +156,7 @@ const Header = () => {
     if (item.onClick) {
       return (
         <button 
-          className="px-4 py-2 rounded-full transition-all duration-200 flex items-center text-[var(--text-secondary)] hover:text-[var(--accent-primary)] hover:bg-[var(--accent-primary)]/5"
+          className="px-4 py-2 rounded-full transition-all duration-200 flex items-center text-sm xl:text-base text-[var(--text-secondary)] hover:text-[var(--accent-primary)] hover:bg-[var(--accent-primary)]/5 whitespace-nowrap shrink-0"
           onClick={(e) => {
             e.preventDefault();
             item.onClick();
@@ -163,7 +171,7 @@ const Header = () => {
     return (
       <Link 
         to={item.to} 
-        className="px-4 py-2 rounded-full transition-all duration-200 flex items-center text-[var(--text-secondary)] hover:text-[var(--accent-primary)] hover:bg-[var(--accent-primary)]/5"
+        className="px-4 py-2 rounded-full transition-all duration-200 flex items-center text-sm xl:text-base text-[var(--text-secondary)] hover:text-[var(--accent-primary)] hover:bg-[var(--accent-primary)]/5 whitespace-nowrap shrink-0"
         onClick={onClick}
       >
         {React.cloneElement(item.icon, { className: "mr-2" })}
@@ -197,7 +205,7 @@ const Header = () => {
           <img src={logo} alt="Tri-Valley Tech Logo" className="h-10 w-auto" />
         </motion.a>
 
-        <nav className="hidden md:flex items-center gap-2">
+        <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
           {navItems.map((item) => (
             <motion.div key={item.name} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <NavLink item={item} onClick={() => setIsMenuOpen(false)} />
@@ -216,7 +224,7 @@ const Header = () => {
           </motion.button>
 
           <motion.button 
-            className="md:hidden p-2 rounded-full transition-all duration-200 text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--text-primary)]/5"
+            className="lg:hidden p-2 rounded-full transition-all duration-200 text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--text-primary)]/5"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             whileTap={{ scale: 0.95 }}
           >
@@ -228,7 +236,7 @@ const Header = () => {
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div 
-            className="md:hidden fixed top-24 left-4 right-4 rounded-2xl shadow-xl bg-[var(--bg-primary)] border border-[var(--text-primary)]/10"
+            className="lg:hidden fixed top-24 left-4 right-4 rounded-2xl shadow-xl bg-[var(--bg-primary)] border border-[var(--text-primary)]/10"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
@@ -528,16 +536,16 @@ const Hero = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {[
             {
-              title: "Chapters",
-              description: "4 chapters across 4 cities. Dublin, Pleasanton, San Ramon, and Livermore. Each chapter is a local hub for collaboration, leadership, and building."
+              title: "Interns",
+              description: "40+ interns across Dublin, Pleasanton, and Fremont building projects through chapter collaboration."
             },
             {
               title: "Consulting",
-              description: "Real partnerships. Real problems. Real solutions. TVT collaborates with nonprofits, schools, and youth organizations to design and deliver technology that makes a difference."
+              description: "15+ consulting projects completed with nonprofits, schools, and youth organizations."
             },
             {
               title: "Events",
-              description: "A growing calendar of youth-focused innovation events. Workshops, speaker sessions, and community impact experiences; with more planned throughout 2026."
+              description: "Workshops, speaker sessions, and community impact experiences focused on youth innovation."
             }
           ].map((item, index) => (
             <motion.div 
@@ -758,9 +766,9 @@ const Hero = () => {
   };
 
   const Footer = () => (
-    <footer className="bg-[var(--bg-secondary)] text-[var(--text-secondary)] py-12 relative overflow-hidden">
-      <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
-      <div className="container mx-auto px-4">
+    <footer className="bg-[var(--bg-secondary)] text-[var(--text-secondary)] py-12 relative z-10 overflow-hidden">
+      <div className="absolute inset-0 bg-grid-pattern opacity-10 pointer-events-none"></div>
+      <div className="container mx-auto px-4 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
             <h3 className="text-xl font-bold text-[var(--accent-primary)] mb-4">Tri-Valley Tech</h3>

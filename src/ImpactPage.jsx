@@ -6,16 +6,16 @@ import { Header, Footer } from './page.jsx';
 const ImpactPage = () => {
   const highlights = [
     {
-      title: "Chapters",
-      description: "4 chapters across 4 cities. Dublin, Pleasanton, San Ramon, and Livermore. Each chapter is a local hub for collaboration, leadership, and building."
+      title: "Interns",
+      description: "40+ interns across Dublin, Pleasanton, and Fremont building real projects through local chapters."
     },
     {
       title: "Consulting",
-      description: "Real partnerships. Real problems. Real solutions. TVT collaborates with nonprofits, schools, and youth organizations to design and deliver technology that makes a difference."
+      description: "15+ projects completed with nonprofits, schools, and youth organizations to deliver practical technology solutions."
     },
     {
       title: "Events",
-      description: "A growing calendar of youth-focused innovation events. Workshops, speaker sessions, and community impact experiences; with more planned throughout 2026."
+      description: "Workshops, speaker sessions, and community impact experiences designed to keep students building and collaborating year-round."
     }
   ];
 

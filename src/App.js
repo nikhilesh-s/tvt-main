@@ -1,7 +1,7 @@
 import './App.css';
 import Web from './page.jsx'
 import ProjectsPage from './projects.jsx';
-import { HashRouter as Router, Route, Routes } from 'react-router-dom';
+import { HashRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import TeamPage from './team.jsx';
 import { ThemeProvider } from './ThemeContext';
 import WhyJoin from './WhyJoin.jsx';
@@ -13,6 +13,17 @@ import ChapterDetail from './ChapterDetail.jsx';
 import ContactPage from './ContactPage.jsx';
 import ResourcesPage from './ResourcesPage.jsx';
 import ProjectProposalPage from './ProjectProposalPage.jsx';
+import { useEffect } from 'react';
+
+const ScrollToTop = () => {
+  const { pathname, search } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname, search]);
+
+  return null;
+};
 
 function App() {
      if (sessionStorage.redirect) {
@@ -25,6 +36,7 @@ function App() {
   return (
     <ThemeProvider>
       <Router>
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<Web />} />
           <Route path="/team" element={<TeamPage />} />

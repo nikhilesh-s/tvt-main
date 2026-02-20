@@ -34,6 +34,7 @@ const chiefSuiteData = [
     name: "Diva Rawal",
     role: "COO",
     image: divaImage,
+    imagePosition: "center 38%",
     description: "Hi, I'm Diva Rawal and at Tri-Valley Tech I focus on operations and executing our team's ideas. My primary role involves working closely with our chapter leads and interns to set structure, align goals, and support teams as they move from planning to real outcomes. I enjoy mentoring others and seeing individuals grow into confident leaders, which is what makes this work meaningful to me. I'm excited to continue growing Tri-Valley Tech and supporting students as we expand our impact.",
     badges: ["Operations", "Leadership", "Mentorship"]
   },
@@ -70,7 +71,8 @@ const OfficerCard = ({ officer, index }) => {
         <img 
           src={officer.image} 
           alt={officer.name} 
-          className="w-full h-[16rem] md:h-[20rem] lg:h-[24rem] object-cover transition duration-300 transform hover:scale-110" 
+          className="w-full h-[16rem] md:h-[20rem] lg:h-[24rem] object-cover transition duration-300 transform hover:scale-110"
+          style={{ objectPosition: officer.imagePosition || 'center' }}
         />
         <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
           <p className="text-white text-lg font-semibold px-4 text-center">{officer.role}</p>
