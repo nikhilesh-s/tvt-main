@@ -43,6 +43,7 @@ const chiefSuiteData = [
     name: "Elijah Guan",
     role: "CTO",
     image: elijahImage,
+    imagePosition: "center 38%",
     description: "I'm Elijah Guan. As the CTO of Tri-Valley Tech, I'm in charge of the creation of Tri-Valley Tech's technical resources, from downloadable resources to full course modules. I believe that having access to high-quality, organized information is the foundation of learning anything, and my goal is to create those resources for everyone to learn. I work with the TVT team to make sure that our educational materials are practical, up-to-date, and designed to help students transition smoothly and thrive in the new technological world.",
     badges: ["Education", "Technical Resources", "Curriculum"]
   },
