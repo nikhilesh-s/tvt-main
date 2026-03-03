@@ -6,7 +6,7 @@ const CommunityInitiatives = () => {
   const initiatives = [
     {
       title: "Girls in STEM Initiative",
-      description: "Photos from mentoring sessions with you, Sid, and Amir."
+      description: "Photos from mentoring sessions with the Tri-Valley Tech board and mentors."
     },
     {
       title: "Jr. FLL and FLL Mentorship",

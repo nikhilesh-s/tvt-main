@@ -79,7 +79,7 @@ const ProjectsPage = () => {
             >
               <h2 className="text-3xl font-bold mb-4 text-[var(--accent-primary)]">Dev Vault</h2>
               <p className="text-[var(--text-secondary)] mb-4">
-                Dev Vault is where interns work on real projects under mentorship from Amir Eftekhar, Diva Rawal, Nikhilesh Suravarjjala, and Siddharth Alluri. It's focused on learning by doing; building skills through actual execution.
+                Dev Vault is where interns work on real projects under mentorship from the Tri-Valley Tech board. It's focused on learning by doing; building skills through actual execution.
               </p>
               <p className="text-[var(--text-secondary)]">
                 Admin panel needed: project uploads, intern attribution, category filters.

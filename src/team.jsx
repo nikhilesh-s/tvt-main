@@ -3,9 +3,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Header, Footer } from './page.jsx';
 import { useState } from 'react';
 
-// Import officer images
-import officer1Image from './images/amir.png';
-import siddharthImage from './images/siddharth.jpg';
 const nikImage = 'https://i.imgur.com/BjjzPXF.jpeg';
 const divaImage = 'https://i.imgur.com/9wrRYYT.jpeg';
 const elijahImage = 'https://i.imgur.com/sNX90Dy.jpeg';
@@ -16,44 +13,28 @@ const chiefSuiteData = [
   {
     id: 1,
     name: "Nikhilesh Suravarjjala",
-    role: "CEO",
+    role: "President & CEO",
     image: nikImage,
     description: "Hey, I'm Nikhilesh Suravarjjala. Tri-Valley Tech is the space where I bring ideas to life; from websites and apps to full community projects. I've always enjoyed building things that blend creativity with real impact, and TVT lets me do that while leading a team that's learning and growing alongside me. What matters to me most is creating tools and experiences that genuinely help people; whether that's a clean user interface, a simple app that solves a real problem, or an event that brings young people together. TVT is where I get to explore design, development, and leadership all at once, and I'm proud of the direction we're heading.",
     badges: ["Leadership", "Design", "Development"]
   },
   {
     id: 2,
-    name: "Amir Eftekhar",
-    role: "Co-CEO",
-    image: officer1Image,
-    description: "I'm Amir Eftekhar, and I focus on turning ideas into well-built, scalable technology. At Tri-Valley Tech, I lead development across projects, mentor students through real technical work, and help shape systems that actually function beyond demos. I've worked extensively in web and app development, curriculum design, and teaching coding, and I enjoy helping students move from curiosity to competence. TVT is about building seriously; my role is to make sure what we ship is thoughtful, functional, and impactful.",
-    badges: ["Engineering", "Mentorship", "Systems"]
+    name: "Diva Rawal",
+    role: "Treasurer & CFO",
+    image: divaImage,
+    imagePosition: "center 62%",
+    description: "Hi, I'm Diva Rawal and at Tri-Valley Tech I lead financial planning and stewardship as Treasurer & CFO. I focus on budgeting, long-term sustainability, and making sure our programs have the resources they need to deliver real outcomes. I work closely with our chapter leads and interns to align financial decisions with mission impact, and I care deeply about helping students grow through structured, well-supported opportunities.",
+    badges: ["Finance", "Strategy", "Leadership"]
   },
   {
     id: 3,
-    name: "Diva Rawal",
-    role: "COO",
-    image: divaImage,
-    imagePosition: "center 62%",
-    description: "Hi, I'm Diva Rawal and at Tri-Valley Tech I focus on operations and executing our team's ideas. My primary role involves working closely with our chapter leads and interns to set structure, align goals, and support teams as they move from planning to real outcomes. I enjoy mentoring others and seeing individuals grow into confident leaders, which is what makes this work meaningful to me. I'm excited to continue growing Tri-Valley Tech and supporting students as we expand our impact.",
-    badges: ["Operations", "Leadership", "Mentorship"]
-  },
-  {
-    id: 4,
     name: "Elijah Guan",
-    role: "CTO",
+    role: "Secretary & CLO",
     image: elijahImage,
     imagePosition: "center 38%",
-    description: "I'm Elijah Guan. As the CTO of Tri-Valley Tech, I'm in charge of the creation of Tri-Valley Tech's technical resources, from downloadable resources to full course modules. I believe that having access to high-quality, organized information is the foundation of learning anything, and my goal is to create those resources for everyone to learn. I work with the TVT team to make sure that our educational materials are practical, up-to-date, and designed to help students transition smoothly and thrive in the new technological world.",
-    badges: ["Education", "Technical Resources", "Curriculum"]
-  },
-  {
-    id: 5,
-    name: "Siddharth Alluri",
-    role: "CFO",
-    image: siddharthImage,
-    description: "I'm Siddharth Alluri, the CFO at Tri-Valley Tech. I manage finances, budgeting, and resource allocation to make sure our projects are sustainable and well-supported. My role is to ensure that strong ideas have the structure and funding they need to succeed. I work closely with the leadership team to align financial decisions with our mission, so students can focus on building meaningful work without unnecessary barriers.",
-    badges: ["Finance", "Strategy", "Operations"]
+    description: "I'm Elijah Guan. As Secretary & CLO at Tri-Valley Tech, I oversee organizational records and legal operations while supporting the integrity of our programs and partnerships. I work on documentation, compliance, and policy clarity so our teams can build with confidence. My goal is to keep our structure strong, transparent, and aligned with our mission as we continue expanding opportunities for students.",
+    badges: ["Legal Operations", "Governance", "Organization"]
   }
 ];
 
@@ -140,9 +121,9 @@ const OfficersPage = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          Leadership Team
+          Board of Directors
         </motion.h1>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 lg:gap-12 items-start">
           {chiefSuiteData.map((officer, index) => (
             <OfficerCard key={officer.id} officer={officer} index={index} />
           ))}
