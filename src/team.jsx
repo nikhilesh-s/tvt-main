@@ -2,9 +2,10 @@ import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Header, Footer } from './page.jsx';
 import { useState } from 'react';
+import savarImage from './images/savar.png';
+import divaImage from './images/diva.jpg';
 
 const nikImage = 'https://i.imgur.com/BjjzPXF.jpeg';
-const divaImage = 'https://i.imgur.com/9wrRYYT.jpeg';
 const elijahImage = 'https://i.imgur.com/sNX90Dy.jpeg';
 
 
@@ -35,6 +36,17 @@ const chiefSuiteData = [
     imagePosition: "center 38%",
     description: "I'm Elijah Guan. As Secretary & CLO at Tri-Valley Tech, I oversee organizational records and legal operations while supporting the integrity of our programs and partnerships. I work on documentation, compliance, and policy clarity so our teams can build with confidence. My goal is to keep our structure strong, transparent, and aligned with our mission as we continue expanding opportunities for students.",
     badges: ["Legal Operations", "Governance", "Organization"]
+  }
+];
+
+const chapterLeadsData = [
+  {
+    id: 4,
+    name: "Savar Shandilya",
+    role: "Fremont Chapter President",
+    image: savarImage,
+    description: "I am the Fremont Chapter President of TVT Cyber-Ed, where I work to bring accessible, hands-on cybersecurity and STEM education to students across the Tri-Valley area. As a high school student with a strong interest in technology, cybersecurity, and community impact, I am passionate about creating opportunities for students to develop practical digital safety skills that are increasingly essential in today's world. In my role, I focus on building engaging workshops, organizing chapter-led events, and helping launch initiatives that introduce cybersecurity concepts to students of all backgrounds. I am especially excited about TVT Cyber-Ed's mission to combine education with real-world tools and applications, empowering students to become more informed, confident, and responsible digital citizens. I am excited to help grow the Fremont chapter from the ground up and contribute to TVT Cyber-Ed's broader vision of making cybersecurity education accessible, impactful, and community-driven.",
+    badges: ["Leadership", "Strategy", "Organization"]
   }
 ];
 
@@ -123,8 +135,23 @@ const OfficersPage = () => {
         >
           Board of Directors
         </motion.h1>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 lg:gap-12 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 lg:gap-12 items-start mb-24">
           {chiefSuiteData.map((officer, index) => (
+            <OfficerCard key={officer.id} officer={officer} index={index} />
+          ))}
+        </div>
+
+        {/* Chapter Leads Section */}
+        <motion.h2
+          className="text-5xl font-bold text-center mb-12 text-transparent bg-clip-text bg-gradient-to-r from-[var(--accent-primary)] to-[var(--accent-secondary)]"
+          initial={{ opacity: 0, y: -50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          Chapter Leads
+        </motion.h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 lg:gap-12 items-start">
+          {chapterLeadsData.map((officer, index) => (
             <OfficerCard key={officer.id} officer={officer} index={index} />
           ))}
         </div>
