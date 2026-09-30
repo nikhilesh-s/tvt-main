@@ -4,6 +4,8 @@ import { Header, Footer } from './page.jsx';
 import { useState } from 'react';
 import savarImage from './images/savar.png';
 import divaImage from './images/diva.jpg';
+import hanaImage from './images/hana.jpg';
+import krishImage from './images/krish.jpg';
 
 const nikImage = 'https://i.imgur.com/BjjzPXF.jpeg';
 const elijahImage = 'https://i.imgur.com/sNX90Dy.jpeg';
@@ -22,11 +24,11 @@ const chiefSuiteData = [
   {
     id: 2,
     name: "Diva Rawal",
-    role: "Treasurer & CFO",
+    role: "COO",
     image: divaImage,
     imagePosition: "center 62%",
-    description: "Hi, I'm Diva Rawal and at Tri-Valley Tech I lead financial planning and stewardship as Treasurer & CFO. I focus on budgeting, long-term sustainability, and making sure our programs have the resources they need to deliver real outcomes. I work closely with our chapter leads and interns to align financial decisions with mission impact, and I care deeply about helping students grow through structured, well-supported opportunities.",
-    badges: ["Finance", "Strategy", "Leadership"]
+    description: "Hi, I'm Diva Rawal and at Tri-Valley Tech I lead day-to-day operations as COO. I focus on planning, coordination, and long-term sustainability, making sure our programs have the structure and resources they need to deliver real outcomes. I work closely with our chapter leads and interns to keep our work aligned with our mission, and I care deeply about helping students grow through structured, well-supported opportunities.",
+    badges: ["Operations", "Strategy", "Leadership"]
   },
   {
     id: 3,
@@ -47,6 +49,24 @@ const chapterLeadsData = [
     image: savarImage,
     description: "I am the Fremont Chapter President of TVT Cyber-Ed, where I work to bring accessible, hands-on cybersecurity and STEM education to students across the Tri-Valley area. As a high school student with a strong interest in technology, cybersecurity, and community impact, I am passionate about creating opportunities for students to develop practical digital safety skills that are increasingly essential in today's world. In my role, I focus on building engaging workshops, organizing chapter-led events, and helping launch initiatives that introduce cybersecurity concepts to students of all backgrounds. I am especially excited about TVT Cyber-Ed's mission to combine education with real-world tools and applications, empowering students to become more informed, confident, and responsible digital citizens. I am excited to help grow the Fremont chapter from the ground up and contribute to TVT Cyber-Ed's broader vision of making cybersecurity education accessible, impactful, and community-driven.",
     badges: ["Leadership", "Strategy", "Organization"]
+  },
+  {
+    id: 5,
+    name: "Hana",
+    role: "San Ramon Chapter President",
+    image: hanaImage,
+    imagePosition: "center 20%",
+    description: "Hi, I'm Hana, and I'm the San Ramon Chapter President of Tri-Valley Tech. I'm passionate about STEM, leadership, and giving students opportunities to explore technology and develop new skills. In my role, I help organize events, connect with students in our community, and lead initiatives that make technology more accessible and engaging. I'm proud to be part of Tri-Valley Tech and to help grow our San Ramon chapter!",
+    badges: ["Leadership", "STEM", "Community"]
+  },
+  {
+    id: 6,
+    name: "Krish",
+    role: "Oakland Chapter President",
+    image: krishImage,
+    imagePosition: "center 30%",
+    description: "Hi, I'm Krish, and I'm the Oakland Chapter President of Tri-Valley Tech. I'm passionate about STEM, leadership, and policy and law, and I'm especially interested in how technology shapes the communities around us. I wanted to bring Tri-Valley Tech to Oakland because of the wealth gap in access to technology and STEM opportunities, and I believe every student deserves the chance to explore tech and develop new skills. In my role, I help organize events, connect with students in our community, and lead initiatives that make technology more accessible and engaging. Outside of TVT, I love spending time outdoors. I'm proud to be part of Tri-Valley Tech and to help grow our Oakland chapter!",
+    badges: ["Leadership", "Policy & Law", "Community"]
   }
 ];
 
