@@ -52,16 +52,16 @@ const chapterLeadsData = [
   },
   {
     id: 5,
-    name: "Hana",
+    name: "Hana Skulan",
     role: "San Ramon Chapter President",
     image: hanaImage,
-    imagePosition: "center 20%",
+    imagePosition: "center 30%",
     description: "Hi, I'm Hana, and I'm the San Ramon Chapter President of Tri-Valley Tech. I'm passionate about STEM, leadership, and giving students opportunities to explore technology and develop new skills. In my role, I help organize events, connect with students in our community, and lead initiatives that make technology more accessible and engaging. I'm proud to be part of Tri-Valley Tech and to help grow our San Ramon chapter!",
     badges: ["Leadership", "STEM", "Community"]
   },
   {
     id: 6,
-    name: "Krish",
+    name: "Krish Parikh",
     role: "Oakland Chapter President",
     image: krishImage,
     imagePosition: "center 30%",
